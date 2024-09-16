@@ -1,7 +1,7 @@
 from src.app.models.base_model import BaseModel
-from sqlalchemy.orm import mapped_column, Mapped
+from sqlalchemy.orm import mapped_column, Mapped, relationship
 from sqlalchemy import UUID, ForeignKey
-from typing import Annotated
+from typing import Annotated, List
 import uuid
 
 
@@ -13,6 +13,8 @@ class Matches(BaseModel):
     player2: Mapped[fk_players]
     winner: Mapped[fk_players]
     score: Mapped[str]
+
+    players: Mapped[List["players"]] = relationship(back_populates="Players", cascade="all, delete")
 
     def __str__(self):
         return (f"{self.__class__.__name__}(id={self.id},"
