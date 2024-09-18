@@ -1,9 +1,7 @@
-from typing import Annotated, List
-from uuid import UUID
-
-from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column, relationship
-from sqlalchemy.sql import sqltypes
+from sqlalchemy import ForeignKey, String
+from typing import List
+from uuid import UUID
 import uuid
 
 
@@ -30,12 +28,10 @@ class Players(Base):
 
 
 class Matches(Base):
-    fk_players = Annotated[int, mapped_column(ForeignKey(Players.id, ondelete="CASCADE"), nullable=False)]
-
     uuid: Mapped[UUID] = mapped_column(String(36), default=uuid.uuid4)
-    player1_id: Mapped[fk_players]
-    player2_id: Mapped[fk_players]
-    winner_id: Mapped[fk_players]
+    player1_id: Mapped[int] = mapped_column(ForeignKey(Players.id, ondelete="CASCADE"), nullable=False)
+    player2_id: Mapped[int] = mapped_column(ForeignKey(Players.id, ondelete="CASCADE"), nullable=False)
+    winner_id: Mapped[int] = mapped_column(ForeignKey(Players.id, ondelete="CASCADE"), nullable=False)
     score: Mapped[str] = mapped_column(String(255))
 
     player1: Mapped["player1"] = relationship(back_populates="Players")
