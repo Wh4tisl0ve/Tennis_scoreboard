@@ -11,7 +11,6 @@ class Match:
         # update - будет вызывать сначала update set, а потом свой
         self.__set.update()
 
-
     def get_dict(self) -> dict:
         return {"player1_match":
                     {"value": self.__player1_value,
