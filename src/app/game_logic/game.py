@@ -7,7 +7,7 @@ class StatusGame(Enum):
     DRAW = -1
     AD = 1
 
-
+# почистить класс
 class Game:
     point_table = {
         0: "0",
@@ -52,11 +52,11 @@ class Game:
     def get_player2_point(self) -> Point:
         return self.__player2_point
 
-    def is_last_point(self):
-        return self.__player1_point.get_point_value() == 3 or self.__player2_point.get_point_value() == 3
+    def is_last_stage(self):
+        return self.__player1_point.point_value == 3 or self.__player2_point.point_value == 3
 
     def is_point_equals(self) -> bool:
-        return self.__player1_point.get_point_value() == self.__player2_point.get_point_value()
+        return self.__player1_point.point_value == self.__player2_point.point_value
 
     def get_point_value(self, pointer: int) -> str:
         return self.point_table[pointer]
@@ -67,6 +67,6 @@ class Game:
         self.__player2_point.reset_value()
 
     def get_dict(self) -> dict:
-        return {"player1_point": {"value": self.get_point_value(self.__player1_point.get_point_value())},
-                "player2_point": {"value": self.get_point_value(self.__player2_point.get_point_value())}
+        return {"player1_point": {"value": self.get_point_value(self.__player1_point.point_value)},
+                "player2_point": {"value": self.get_point_value(self.__player2_point.point_value)}
                 }

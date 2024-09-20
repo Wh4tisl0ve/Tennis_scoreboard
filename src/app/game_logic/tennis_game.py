@@ -1,5 +1,5 @@
 from app.game_logic.match import Match
-from app.game_logic.game import Game, StatusGame
+from app.game_logic.game import Game
 from app.game_logic.set import GameSet
 
 
