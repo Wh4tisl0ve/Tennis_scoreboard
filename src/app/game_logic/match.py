@@ -7,7 +7,11 @@ class Match:
         self.__player1_value: int = 0
         self.__player2_value: int = 0
 
-    # update - будет вызывать сначала update set, а потом свой
+    def update(self):
+        # update - будет вызывать сначала update set, а потом свой
+        self.__set.update()
+
+
     def get_dict(self) -> dict:
         return {"player1_match":
                     {"value": self.__player1_value,
