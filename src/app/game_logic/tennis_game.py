@@ -1,23 +1,48 @@
-from app.game_logic.match import Match
-from app.game_logic.game import Game
-from app.game_logic.set import GameSet
+from app.game_logic.tennis_point import TennisPoint
+from enum import Enum
 
 
+class StatusGame(Enum):
+    NORMAL = 0
+    DRAW = -1
+    AD = 1
+
+
+# почистить класс
 class TennisGame:
     def __init__(self):
-        self.game: Game = Game()
-        self.game_set: GameSet = GameSet(self.game)
-        self.match: Match = Match(self.game_set)
+        self.__player1_point = TennisPoint()
+        self.__player2_point = TennisPoint()
+        self.__state = StatusGame.NORMAL
 
-    def player1_goals(self):
-        player1_point = self.game.get_player1_point()
-        player2_point = self.game.get_player2_point()
-        self.game_set.calc_set(player1_point, player2_point)
+    @property
+    def player1_point(self) -> TennisPoint:
+        return self.__player1_point
 
-    def player2_goals(self):
-        player2_point = self.game.get_player2_point()
-        player1_point = self.game.get_player1_point()
-        self.game_set.calc_set(player2_point, player1_point)
+    @property
+    def player2_point(self) -> TennisPoint:
+        return self.__player2_point
+
+    @property
+    def state(self):
+        return self.__state
+
+    @state.setter
+    def state(self, status: StatusGame):
+        self.__state = status
+
+    def is_last_stage(self):
+        return self.__player1_point.is_last_point() or self.__player2_point.is_last_point()
+
+    def is_point_equals(self) -> bool:
+        return self.__player1_point == self.__player2_point
+
+    def reset(self):
+        self.__state = StatusGame.NORMAL
+        self.__player1_point.reset_value()
+        self.__player2_point.reset_value()
 
     def get_dict(self) -> dict:
-        return self.match.get_dict()
+        return {"player1_point": {"value": self.__player1_point.point_value},
+                "player2_point": {"value": self.__player2_point.point_value}
+                }

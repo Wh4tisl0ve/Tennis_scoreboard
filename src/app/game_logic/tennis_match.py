@@ -1,9 +1,9 @@
-from app.game_logic.set import GameSet
+from app.game_logic.tennis_set import TennisSet
 
 
-class Match:
-    def __init__(self, game_set: GameSet):
-        self.__set: GameSet = game_set
+class TennisMatch:
+    def __init__(self, game_set: TennisSet):
+        self.__set: TennisSet = game_set
         self.__player1_value: int = 0
         self.__player2_value: int = 0
 
