@@ -8,10 +8,10 @@ class StatePoint(Enum):
 
 class TennisPoint:
     point_table = {
-        0: 0,
-        1: 15,
-        2: 30,
-        3: 40,
+        0: "0",
+        1: "15",
+        2: "30",
+        3: "40",
         4: "AD"
     }
 
@@ -22,10 +22,13 @@ class TennisPoint:
 
     @property
     def point_value(self) -> int:
+        return self.__value
+
+    def get_value(self) -> str:
         if self.__state == StatePoint.NORMAL:
             return self.point_table[self.__value]
         else:
-            return self.__value
+            return str(self.__value)
 
     def add_point(self) -> None:
         self.__value += 1

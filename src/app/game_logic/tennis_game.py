@@ -43,6 +43,6 @@ class TennisGame:
         self.__player2_point.reset_value()
 
     def get_dict(self) -> dict:
-        return {"player1_point": {"value": self.__player1_point.point_value},
-                "player2_point": {"value": self.__player2_point.point_value}
+        return {"player1_point": {"value": self.__player1_point.get_value()},
+                "player2_point": {"value": self.__player2_point.get_value()}
                 }
