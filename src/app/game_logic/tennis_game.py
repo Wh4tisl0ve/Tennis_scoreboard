@@ -37,6 +37,9 @@ class TennisGame:
     def is_point_equals(self) -> bool:
         return self.__player1_point == self.__player2_point
 
+    def is_diff_two_point(self):
+        return abs(self.__player1_point.point_value - self.__player2_point.point_value) == 2
+
     def reset(self):
         self.__state = StatusGame.NORMAL
         self.__player1_point.reset_value()

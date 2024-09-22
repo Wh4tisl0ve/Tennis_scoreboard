@@ -1,28 +1,26 @@
 from app.game_logic.tennis_game import TennisGame, StatusGame
 from app.game_logic.tennis_point import TennisPoint
+from app.observer.observer import Observer
 
 
-class TennisSet:
+class TennisSet(Observer):
     def __init__(self, game: TennisGame):
         self.__game = game
         self.__player1_value = 0
         self.__player2_value = 0
 
-    def calc_set(self, player1_point: TennisPoint, player2_point: TennisPoint):
+    def update(self, observer: TennisPoint):
         match self.__game.state:
             case StatusGame.NORMAL:
-                if player1_point.is_last_point():
+                if observer.is_last_point():
                     self.win_set()
-                else:
-                    player1_point.add_point()
             case StatusGame.DRAW:
-                player1_point.add_point()
                 self.__game.state = StatusGame.AD
             case StatusGame.AD:
-                if (player1_point.point_value + 1 - player2_point.point_value) == 2:
+                if self.__game.is_diff_two_point():
                     self.win_set()
                 else:
-                    player2_point.minus_point()
+                    print('Плейер2 Минус очко')
 
         if self.__game.is_last_stage():
             self.set_state_draw()
@@ -36,7 +34,7 @@ class TennisSet:
             self.__player1_value += 1
         else:
             self.__player2_value += 1
-
+        # сюда notify
         self.__game.reset()
 
     def get_dict(self) -> dict:

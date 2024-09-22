@@ -1,4 +1,7 @@
+from app.observer.observer import Observer, Subject
 from enum import Enum
+
+from typing import List
 
 
 class StatePoint(Enum):
@@ -6,7 +9,8 @@ class StatePoint(Enum):
     TIE_BREAK = 1
 
 
-class TennisPoint:
+class TennisPoint(Subject):
+    _observers: List[Observer] = []
     point_table = {
         0: "0",
         1: "15",
@@ -14,6 +18,16 @@ class TennisPoint:
         3: "40",
         4: "AD"
     }
+
+    def notify_subscribers(self):
+        for obs in self._observers:
+            obs.update(self)
+
+    def attach(self, observer: Observer):
+        self._observers.append(observer)
+
+    def detach(self, observer: Observer):
+        self._observers.remove(observer)
 
     def __init__(self):
         self.__value = 0
@@ -31,6 +45,7 @@ class TennisPoint:
             return str(self.__value)
 
     def add_point(self) -> None:
+        self.notify_subscribers()
         self.__value += 1
 
     def minus_point(self) -> None:
