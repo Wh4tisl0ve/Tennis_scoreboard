@@ -11,10 +11,6 @@ class Subject(ABC):
     def attach(self, observer: Observer):
         pass
 
-    @abstractmethod
-    def detach(self, observer: Observer):
-        pass
-
 
 class Observer(ABC):
     @abstractmethod
