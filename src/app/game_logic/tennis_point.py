@@ -1,8 +1,6 @@
 from app.observer.observer import Observer, Subject
 from enum import Enum
 
-from typing import List
-
 
 class StatePoint(Enum):
     NORMAL = 0
@@ -10,7 +8,6 @@ class StatePoint(Enum):
 
 
 class TennisPoint(Subject):
-    _observers: List[Observer] = []
     point_table = {
         0: "0",
         1: "15",
@@ -19,20 +16,18 @@ class TennisPoint(Subject):
         4: "AD"
     }
 
-    def notify_subscribers(self):
-        for obs in self._observers:
-            obs.update(self)
-
-    def attach(self, observer: Observer):
-        self._observers.append(observer)
-
-    def detach(self, observer: Observer):
-        self._observers.remove(observer)
-
     def __init__(self):
+        self.__observer: Observer | None = None
         self.__value = 0
         self.__last_point = 3
         self.__state = StatePoint.NORMAL
+
+    def notify_subscribers(self):
+        if self.__observer is not None:
+            self.__observer.update(self)
+
+    def attach(self, observer: Observer):
+        self.__observer = observer
 
     @property
     def point_value(self) -> int:
@@ -46,6 +41,8 @@ class TennisPoint(Subject):
 
     def add_point(self) -> None:
         self.notify_subscribers()
+
+    def plus_point(self):
         self.__value += 1
 
     def minus_point(self) -> None:
@@ -62,6 +59,9 @@ class TennisPoint(Subject):
         if not isinstance(other, (int, TennisPoint)):
             raise TypeError("Операнд справа должен иметь тип int или Point")
 
+    def __hash__(self):
+        return hash(self.__value)
+
     def __eq__(self, other):
         self.__verify_data(other)
         return self.__value == other.__value
@@ -73,3 +73,4 @@ class TennisPoint(Subject):
     def __gt__(self, other):
         self.__verify_data(other)
         return self.__value > other.__value
+

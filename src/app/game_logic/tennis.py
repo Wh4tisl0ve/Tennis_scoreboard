@@ -9,8 +9,10 @@ class Tennis:
         self.__tennis_set: TennisSet = TennisSet(self.__tennis_game)
         self.__tennis_match: TennisMatch = TennisMatch(self.__tennis_set)
 
-        self.__tennis_game.player1_point.attach(self.__tennis_set)
-        self.__tennis_game.player2_point.attach(self.__tennis_set)
+        self.__tennis_game.player1_point.attach(self.__tennis_game)
+        self.__tennis_game.player2_point.attach(self.__tennis_game)
+        self.__tennis_game.attach(self.__tennis_set)
+
 
     def player1_goals(self):
         self.__tennis_game.player1_point.add_point()
