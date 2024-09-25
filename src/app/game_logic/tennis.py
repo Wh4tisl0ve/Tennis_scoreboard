@@ -20,10 +20,12 @@ class Tennis:
 
     def update(self):
         self.__tennis_set.update()
+        self.__tennis_match.update()
 
     def get_dict(self) -> dict:
         dict_game = {
             "game": self.__tennis_game.get_dict(),
-            "set": self.__tennis_set.get_dict()
+            "set": self.__tennis_set.get_dict(),
+            "match": self.__tennis_match.get_dict()
         }
         return dict_game
