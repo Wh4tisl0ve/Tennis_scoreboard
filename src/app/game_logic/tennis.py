@@ -22,6 +22,12 @@ class Tennis:
         self.__tennis_set.update()
         self.__tennis_match.update()
 
+    def get_winner_id(self) -> int:
+        if self.__tennis_match.player1_value > self.__tennis_match.player2_value:
+            return 1
+        else:
+            return 2
+
     def get_dict(self) -> dict:
         dict_game = {
             "game": self.__tennis_game.get_dict(),
