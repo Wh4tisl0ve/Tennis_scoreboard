@@ -15,7 +15,11 @@ class TennisMatch(TennisModel):
                     if self._child_model.is_diff_two_point():
                         self.win()
                 case State.TIE_BREAK:
-                    self.win()
+                    if self.is_set_diff_one_point():
+                        self.win()
 
             if self._child_model.is_equals_value():
                 self.set_state(State.TIE_BREAK)
+
+    def is_set_diff_one_point(self):
+        return abs(self._child_model._player1_value - self._child_model._player2_value) >= 1
