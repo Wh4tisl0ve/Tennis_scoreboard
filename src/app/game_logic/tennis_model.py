@@ -1,0 +1,55 @@
+
+
+from abc import ABC
+
+from app.game_logic.state_game import State
+
+
+class TennisModel(ABC):
+    _state: State = State.NORMAL
+
+    def __init__(self):
+        self._player1_value: int = 0
+        self._player2_value: int = 0
+
+    def add_value_player1(self) -> None:
+        self._player1_value += 1
+
+    def add_value_player2(self) -> None:
+        self._player2_value += 1
+
+    def set_state(self, state: State) -> None:
+        self._state = state
+
+    def win(self):
+        if self._player1_value > self._player2_value:
+            self._player1_value += 1
+        else:
+            self._player2_value += 1
+
+    def is_last_player1_value(self) -> bool:
+        return self._player1_value == self._last_point
+
+    def is_last_player2_value(self) -> bool:
+        return self._player2_value == self._last_point
+
+    def is_last_stage(self) -> bool:
+        return self._player1_value >= self._last_point or self._player2_value >= self._last_point
+
+    def is_points_not_last_stage(self) -> bool:
+        return self._player1_value != self._last_point and self._player2_value != self._last_point
+
+    def is_value_equals(self) -> bool:
+        return self._player1_value == self._player2_value
+
+    def is_diff_two_point(self):
+        return abs(self._player1_value - self._player2_value) >= 2
+
+    def reset_value(self):
+        self.set_state(State.NORMAL)
+        self._player1_value = 0
+        self._player2_value = 0
+
+    def get_dict(self) -> dict:
+        return {"player1_value": self._player1_value,
+                "player2_value": self._player2_value}

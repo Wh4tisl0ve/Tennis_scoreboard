@@ -1,6 +1,7 @@
+from app.game_logic.tennis_set import TennisSet
 from app.game_logic.tennis_match import TennisMatch
 from app.game_logic.tennis_game import TennisGame
-from app.game_logic.tennis_set import TennisSet
+from app.game_logic.tennis_match import TennisMatch
 
 
 class Tennis:
@@ -9,16 +10,20 @@ class Tennis:
         self.__tennis_set: TennisSet = TennisSet(self.__tennis_game)
         self.__tennis_match: TennisMatch = TennisMatch(self.__tennis_set)
 
-        self.__tennis_game.player1_point.attach(self.__tennis_game)
-        self.__tennis_game.player2_point.attach(self.__tennis_game)
-        self.__tennis_game.attach(self.__tennis_set)
-        self.__tennis_set.attach(self.__tennis_match)
-
     def player1_goals(self):
-        self.__tennis_game.player1_point.add_point()
+        self.__tennis_game.add_value_player1()
+        self.update()
 
     def player2_goals(self):
-        self.__tennis_game.player2_point.add_point()
+        self.__tennis_game.add_value_player2()
+        self.update()
+
+    def update(self):
+        self.__tennis_set.update()
 
     def get_dict(self) -> dict:
-        return self.__tennis_match.get_dict()
+        dict_game = {
+            "game": self.__tennis_game.get_dict(),
+            "set": self.__tennis_set.get_dict()
+        }
+        return dict_game

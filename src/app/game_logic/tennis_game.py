@@ -1,78 +1,51 @@
-from app.observer.observer import Observer, Subject
-from app.game_logic.tennis_point import TennisPoint
-from enum import Enum
 
 
-class StatusGame(Enum):
-    NORMAL = 0
-    DRAW = -1
-    AD = 1
+from typing import Callable
+
+from app.game_logic.state_game import State
+from app.game_logic.tennis_model import TennisModel
 
 
-class TennisGame(Observer, Subject):
-    _observer: Observer | None = None
+class TennisGame(TennisModel):
+    point_table = ["0", "15", "30", "40", "AD"]
 
     def __init__(self):
-        self.__player1_point: TennisPoint = TennisPoint()
-        self.__player2_point: TennisPoint = TennisPoint()
-        self.__state: StatusGame = StatusGame.NORMAL
+        super().__init__()
+        self._last_point = 3
 
-    def update(self, observer: TennisPoint):
-        match self.__state:
-            case StatusGame.NORMAL:
-                if observer.is_last_point():
-                    self.notify_subscribers()
-                    self.reset()
-                else:
-                    observer.plus_point()
-            case StatusGame.DRAW:
-                observer.plus_point()
-                self.__state = StatusGame.AD
-            case StatusGame.AD:
-                enemy = self.get_enemy(observer)
-                if observer.point_value + 1 - enemy.point_value == 2:
-                    self.notify_subscribers()
-                    self.reset()
-                else:
-                    enemy.minus_point()
+    def get_value(self, value: int) -> str:
+        if self._state == State.TIE_BREAK:
+            return str(value)
+        else:
+            return self.point_table[value]
 
-        if self.is_last_stage():
-            if self.is_point_equals():
-                self.__state = StatusGame.DRAW
+    def get_enemy_action(self, player_value: int) -> Callable:
+        dict_enemy = {self._player1_value: self.minus_point_player2,
+                      self._player2_value: self.minus_point_player1}
 
-    def notify_subscribers(self):
-        if self._observer is not None:
-            self._observer.update(self)
+        return dict_enemy[player_value]
 
-    def attach(self, observer: Observer) -> None:
-        self._observer = observer
+    def add_value_player1(self) -> None:
+        if not self.is_advantage():
+            self._player1_value += 1
+        else:
+            self.get_enemy_action(self._player1_value)()
 
-    @property
-    def player1_point(self) -> TennisPoint:
-        return self.__player1_point
+    def add_value_player2(self) -> None:
+        if not self.is_advantage():
+            self._player2_value += 1
+        else:
+            self.get_enemy_action(self._player2_value)()
 
-    @property
-    def player2_point(self) -> TennisPoint:
-        return self.__player2_point
+    def is_advantage(self):
+        return self.is_last_stage() and self._state == State.AD
 
-    def is_last_stage(self) -> bool:
-        return self.__player1_point.is_last_point() or self.__player2_point.is_last_point()
+    def minus_point_player1(self) -> None:
+        self._player1_value -= 1
 
-    def is_point_equals(self) -> bool:
-        return self.__player1_point == self.__player2_point
-
-    def get_enemy(self, player_point: TennisPoint) -> TennisPoint:
-        enemy_point = {self.__player1_point: self.__player2_point,
-                       self.__player2_point: self.__player1_point}
-
-        return enemy_point[player_point]
-
-    def reset(self) -> None:
-        self.__state = StatusGame.NORMAL
-        self.__player1_point.reset_value()
-        self.__player2_point.reset_value()
+    def minus_point_player2(self) -> None:
+        self._player2_value -= 1
 
     def get_dict(self) -> dict:
-        return {"player1_point": {"value": self.__player1_point.get_value()},
-                "player2_point": {"value": self.__player2_point.get_value()}
-                }
+        return {"player1_value": self.get_value(self._player1_value),
+                "player2_value": self.get_value(self._player2_value)}
