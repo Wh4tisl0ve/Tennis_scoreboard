@@ -9,17 +9,19 @@ class TennisMatch(TennisModel):
         self._child_model: TennisSet = tennis_set
 
     def update(self):
-        if self._child_model.is_last_stage():
+        if self._child_model.is_last_stage() and not self.is_diff_two_point():
             match self._state:
                 case State.NORMAL:
                     if self._child_model.is_diff_two_point():
                         self.win()
+                        return
                 case State.TIE_BREAK:
-                    if self.is_set_diff_one_point():
+                    if self.is_child_value_diff_one_point():
                         self.win()
+                        return
 
             if self._child_model.is_equals_value():
                 self.set_state(State.TIE_BREAK)
 
-    def is_set_diff_one_point(self):
+    def is_child_value_diff_one_point(self):
         return abs(self._child_model._player1_value - self._child_model._player2_value) >= 1

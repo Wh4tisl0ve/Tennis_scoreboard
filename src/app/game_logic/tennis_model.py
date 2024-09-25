@@ -10,6 +10,14 @@ class TennisModel(ABC):
         self._player2_value: int = 0
         self._child_model: TennisModel | None = None
 
+    @property
+    def player1_value(self) -> int:
+        return self._player1_value
+
+    @property
+    def player2_value(self) -> int:
+        return self._player2_value
+
     def add_value_player1(self) -> None:
         self._player1_value += 1
 
