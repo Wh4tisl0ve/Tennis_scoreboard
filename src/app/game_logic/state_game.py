@@ -1,4 +1,7 @@
-class State:
+from enum import Enum
+
+
+class State(Enum):
     NORMAL = 0
     DRAW = -1
     AD = 1
