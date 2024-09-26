@@ -1,8 +1,10 @@
-from app.config import settings
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm.session import Session
 from typing import Generator
+
+from sqlalchemy.orm.session import Session
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+
+from app.config import settings
 
 
 class DataBaseEngine:

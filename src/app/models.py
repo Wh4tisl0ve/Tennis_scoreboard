@@ -1,8 +1,9 @@
-from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column, relationship
-from sqlalchemy import ForeignKey, String
+import uuid
 from typing import List
 from uuid import UUID
-import uuid
+
+from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column, relationship
+from sqlalchemy import ForeignKey, String
 
 
 class Base(DeclarativeBase):
