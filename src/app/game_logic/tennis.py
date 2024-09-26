@@ -1,7 +1,6 @@
-from app.game_logic.tennis_set import TennisSet
 from app.game_logic.tennis_match import TennisMatch
 from app.game_logic.tennis_game import TennisGame
-from app.game_logic.tennis_match import TennisMatch
+from app.game_logic.tennis_set import TennisSet
 
 
 class Tennis:
@@ -9,18 +8,28 @@ class Tennis:
         self.__tennis_game: TennisGame = TennisGame()
         self.__tennis_set: TennisSet = TennisSet(self.__tennis_game)
         self.__tennis_match: TennisMatch = TennisMatch(self.__tennis_set)
+        self.__is_game_end: bool = False
 
-    def player1_goals(self):
-        self.__tennis_game.add_value_player1()
-        self.update()
+    @property
+    def is_end_game(self) -> bool:
+        return self.__is_game_end
 
-    def player2_goals(self):
-        self.__tennis_game.add_value_player2()
-        self.update()
+    def player1_goals(self) -> None:
+        # эту проверку можно вынести ещё выше
+        if not self.__is_game_end:
+            self.__tennis_game.add_value_player1()
+            self.update()
 
-    def update(self):
+    def player2_goals(self) -> None:
+        if not self.__is_game_end:
+            self.__tennis_game.add_value_player2()
+            self.update()
+
+    def update(self) -> None:
         self.__tennis_set.update()
         self.__tennis_match.update()
+        if self.__tennis_match.is_last_stage():
+            self.__is_game_end = True
 
     def get_winner_id(self) -> int:
         if self.__tennis_match.player1_value > self.__tennis_match.player2_value:
