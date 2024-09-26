@@ -7,6 +7,7 @@ class TennisMatch(TennisModel):
     def __init__(self, tennis_set: TennisSet):
         super().__init__()
         self._child_model: TennisSet = tennis_set
+        self._last_point = 2
 
     def update(self):
         if self._child_model.is_last_stage() and not self.is_diff_two_point():
@@ -25,3 +26,4 @@ class TennisMatch(TennisModel):
 
     def is_child_value_diff_one_point(self):
         return abs(self._child_model._player1_value - self._child_model._player2_value) >= 1
+

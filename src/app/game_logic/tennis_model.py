@@ -1,5 +1,6 @@
-from app.game_logic.state_game import State
 from abc import ABC
+
+from app.game_logic.state_game import State
 
 
 class TennisModel(ABC):
@@ -18,12 +19,6 @@ class TennisModel(ABC):
     def player2_value(self) -> int:
         return self._player2_value
 
-    def add_value_player1(self) -> None:
-        self._player1_value += 1
-
-    def add_value_player2(self) -> None:
-        self._player2_value += 1
-
     def set_state(self, state: State) -> None:
         self._state = state
         self._child_model.set_state(state)
@@ -35,12 +30,6 @@ class TennisModel(ABC):
             self._player2_value += 1
 
         self.reset()
-
-    def is_last_value(self) -> bool:
-        return self._player1_value == self._last_point
-
-    def is_last_player2_value(self) -> bool:
-        return self._player2_value == self._last_point
 
     def is_last_stage(self) -> bool:
         return self._player1_value >= self._last_point or self._player2_value >= self._last_point
@@ -60,5 +49,5 @@ class TennisModel(ABC):
         self._child_model._player2_value = 0
 
     def get_dict(self) -> dict:
-        return {"player1_value": self._player1_value,
-                "player2_value": self._player2_value}
+        return {"player1_value": str(self._player1_value),
+                "player2_value": str(self._player2_value)}
