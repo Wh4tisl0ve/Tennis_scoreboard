@@ -1,6 +1,6 @@
 import json
 
-from app.game_logic.tennis import Tennis
+from src.app.game_logic.tennis import Tennis
 
 
 def main():

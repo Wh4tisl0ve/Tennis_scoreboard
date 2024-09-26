@@ -1,6 +1,6 @@
 from abc import ABC
 
-from app.game_logic.state_game import State
+from src.app.game_logic.state_game import State
 
 
 class TennisModel(ABC):

@@ -1,6 +1,6 @@
-from app.game_logic.tennis_model import TennisModel
-from app.game_logic.tennis_game import TennisGame
-from app.game_logic.state_game import State
+from src.app.game_logic.tennis_model import TennisModel
+from src.app.game_logic.tennis_game import TennisGame
+from src.app.game_logic.state_game import State
 
 
 class TennisSet(TennisModel):

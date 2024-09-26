@@ -4,7 +4,7 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
-from app.config import settings
+from src.app.config import settings
 
 
 class DataBaseEngine:
