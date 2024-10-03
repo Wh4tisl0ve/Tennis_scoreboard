@@ -9,7 +9,7 @@ class TennisGame(TennisModel):
 
     def __init__(self):
         super().__init__()
-        self._last_point = 3
+        self._last_point: int = 3
 
     def get_value(self, value: int) -> str:
         if self._state == State.TIE_BREAK:

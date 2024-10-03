@@ -23,7 +23,7 @@ class TennisModel(ABC):
         self._state = state
         self._child_model.set_state(state)
 
-    def win(self):
+    def win(self) -> None:
         if self._child_model._player1_value > self._child_model._player2_value:
             self._player1_value += 1
         else:
@@ -40,10 +40,10 @@ class TennisModel(ABC):
     def is_equals_value(self) -> bool:
         return self._player1_value == self._player2_value
 
-    def is_diff_two_point(self):
+    def is_diff_two_point(self) -> bool:
         return abs(self._player1_value - self._player2_value) >= 2
 
-    def reset(self):
+    def reset(self) -> None:
         self.set_state(State.NORMAL)
         self._child_model._player1_value = 0
         self._child_model._player2_value = 0

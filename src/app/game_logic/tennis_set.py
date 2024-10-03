@@ -9,7 +9,7 @@ class TennisSet(TennisModel):
         self._child_model: TennisGame = tennis_game
         self._last_point: int = 6
 
-    def update(self):
+    def update(self) -> None:
         if self._child_model.is_last_stage():
             match self._state:
                 case State.NORMAL:
