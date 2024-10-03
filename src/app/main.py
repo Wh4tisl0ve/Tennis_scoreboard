@@ -1,15 +1,15 @@
-import json
-
-from src.app.game_logic.tennis import Tennis
+from waitress import serve
 
 
-def main():
-    game = Tennis()
-    for i in range(85):
-        game.player1_goals()
+def hello_world(environ, start_response):
+    start_response('200 OK', [('Content-Type', 'text/plain')])
+    return [b'Hello, Wodfrld!']
 
-    print(json.dumps(game.get_dict(), indent=4))
+
+def run_server(host='127.0.0.1', port='5000'):
+    print(f'Server running on port {port}')
+    serve(hello_world, listen=f'{host}:{port}')
 
 
 if __name__ == '__main__':
-    main()
+    run_server()
