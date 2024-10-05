@@ -3,7 +3,7 @@ from src.app.game_logic.tennis_match import TennisMatch
 from src.app.game_logic.tennis_set import TennisSet
 
 
-class Tennis:
+class TennisService:
     def __init__(self):
         self.__tennis_game: TennisGame = TennisGame()
         self.__tennis_set: TennisSet = TennisSet(self.__tennis_game)
