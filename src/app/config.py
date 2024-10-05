@@ -18,7 +18,7 @@ class DatabaseConfig:
     DB_NAME: str = __config['DB_NAME']
 
     @property
-    def DATABASE_URL_pymysql(self):
+    def DATABASE_URL_pymysql(self) -> str:
         return f'mysql+pymysql://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}'
 
 
