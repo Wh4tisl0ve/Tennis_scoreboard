@@ -1,11 +1,11 @@
 import pytest
 
-from app.game_logic.tennis import Tennis
+from app.service.tennis_service import TennisService
 
 
 class TestTennisSet:
     def setup_method(self):
-        self.__tennis: Tennis = Tennis()
+        self.__tennis: TennisService = TennisService()
 
     @pytest.fixture(params=[
         (1, "0"),
