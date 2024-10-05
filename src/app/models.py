@@ -19,10 +19,21 @@ class Base(DeclarativeBase):
 class Players(Base):
     name: Mapped[str] = mapped_column(String(30), unique=True, nullable=False, index=True)
 
-    matches: Mapped[List["matches"]] = relationship(back_populates="Matches", cascade="all, delete")
+    matches_player1: Mapped[List["Matches"]] = relationship("Matches",
+                                                            back_populates="player1",
+                                                            cascade="all, delete",
+                                                            foreign_keys="Matches.player1_id")
+    matches_player2: Mapped[List["Matches"]] = relationship("Matches",
+                                                            back_populates="player2",
+                                                            cascade="all, delete",
+                                                            foreign_keys="Matches.player2_id")
+    matches_winner: Mapped[List["Matches"]] = relationship("Matches",
+                                                           back_populates="winner",
+                                                           cascade="all, delete",
+                                                           foreign_keys="Matches.winner_id")
 
     def __str__(self):
-        return f"{self.__class__.__name__}(id={self.id}, name={self.name}"
+        return f"{self.__class__.__name__}(id={self.id}, name={self.name})"
 
     def __repr__(self):
         return str(self)
@@ -35,9 +46,9 @@ class Matches(Base):
     winner_id: Mapped[int] = mapped_column(ForeignKey(Players.id, ondelete="CASCADE"), nullable=False)
     score: Mapped[str] = mapped_column(String(255))
 
-    player1: Mapped["player1"] = relationship(back_populates="Players")
-    player2: Mapped["player2"] = relationship(back_populates="Players")
-    winner: Mapped["winner"] = relationship(back_populates="Players")
+    player1: Mapped["Players"] = relationship("Players", foreign_keys=[player1_id])
+    player2: Mapped["Players"] = relationship("Players", foreign_keys=[player2_id])
+    winner: Mapped["Players"] = relationship("Players", foreign_keys=[winner_id])
 
     def __str__(self):
         return (f"{self.__class__.__name__}(id={self.id},"
