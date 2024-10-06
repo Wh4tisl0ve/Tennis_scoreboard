@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Главная страница
+{% endblock %}
+
+{% block content %}
+<form class="new_match_form" method="post" name="new_match_form" action="pages/new-match">
+    <h1 class="title_form">Создание нового матча</h1>
+    <div class="input_block">
+        <div class="block_player">
+            <fieldset class="fieldset_player">
+                <legend class="legend_name_player">Введите имя 1 игрока</legend>
+                <p>
+                    <label for="player1_name">
+                        Имя<em>*:</em>
+                    </label>
+                    <input type="text" id="player1_name" name="player_name">
+                </p>
+                <span class="form_hint_uncorrect">Некорректный формат имени</span>
+            </fieldset>
+        </div>
+
+        <div class="block_player">
+            <fieldset class="fieldset_player">
+                <legend class="legend_name_player">Введите имя 2 игрока</legend>
+                <p>
+                    <label for="player2_name">
+                        Имя<em>*:</em>
+                    </label>
+                    <input type="text" id="player2_name">
+                </p>
+                <span class="form_hint_uncorrect">Некорректный формат имени</span>
+            </fieldset>
+        </div>
+    </div>
+    <p>
+        <button class="btn" type="submit" name="create_match">Создать матч</button>
+        <button class="btn" type="reset" name="clear_form">Очистить форму</button>
+    </p>
+</form>
+{% endblock %}
+
+# TODO: сделать блоки через циклы, они все равно повторяются
