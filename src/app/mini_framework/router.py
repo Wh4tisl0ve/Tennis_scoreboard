@@ -1,5 +1,5 @@
-from typing import Callable
 import re
+from typing import Callable
 
 
 class Router:
@@ -21,4 +21,4 @@ class Router:
             if endpoint.match(url):
                 return handler
 
-        raise NotFoundError("")
+        raise Exception("Enpoint не найден")
