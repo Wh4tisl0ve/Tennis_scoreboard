@@ -1,7 +1,7 @@
 from typing import Callable
 
-from src.app.game_logic.tennis_model import TennisModel
-from src.app.game_logic.state_game import State
+from src.app.tennis_logic.tennis_model import TennisModel
+from src.app.tennis_logic.state_game import State
 
 
 class TennisGame(TennisModel):
