@@ -1,22 +1,19 @@
-from app.repository.base_repository import T
-from app.models import Matches
 from app.repository.sqlalchemy_repository import SqlAlchemyRepository
+from app.repository.base_repository import T
+from app.models import Matches, Players
 
 
 class MatchesRepository(SqlAlchemyRepository):
     __model_name__ = Matches
 
-    # сюда передается сформированный матч
-    def add(self, match: Matches) -> Matches:
-        self._session.add(match)
-
-        self._session.flush()
-        self._session.commit()
-
-        return match
+    def find_all_by_player_name(self, name: str) -> list[Matches]:
+        return self._session.query(Matches, Players).filter(Players.name.contains(name))
 
     def delete(self, entity: T) -> T:
         pass
 
     def update(self, entity: T) -> None:
         pass
+
+
+matches_repo = MatchesRepository()

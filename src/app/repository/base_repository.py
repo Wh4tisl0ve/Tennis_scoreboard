@@ -10,6 +10,7 @@ T = TypeVar("T", bound=Base)
 class BaseRepository(Generic[T], ABC):
     def __init__(self):
         self._session = db_engine_mysql.get_session()
+
     @abstractmethod
     def add(self, entity: T) -> T:
         pass
