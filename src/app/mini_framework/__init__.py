@@ -1,5 +1,5 @@
-from app.mini_framework.router import Router
+from app.mini_framework.mini_framework import MiniFrameWork
 
-router = Router()
+app = MiniFrameWork()
 
 from app.controllers import controller
