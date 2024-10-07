@@ -1,11 +1,11 @@
 import pytest
 
-from app.service.tennis_service import TennisService
+from app.tennis_logic.tennis import Tennis
 
 
 class TestTennisMatch:
     def setup_method(self):
-        self.__tennis: TennisService = TennisService()
+        self.__tennis: Tennis = Tennis()
 
     @pytest.fixture
     def player1_win_match(self):
