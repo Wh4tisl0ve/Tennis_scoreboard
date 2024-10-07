@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<form class="new_match_form" method="post" name="new_match_form" action="pages/new-match">
+<form class="new_match_form" method="post" name="new_match_form" action="/new-match">
     <h1 class="title_form">Создание нового матча</h1>
     <div class="input_block">
         <div class="block_player">
@@ -15,7 +15,7 @@
                     <label for="player1_name">
                         Имя<em>*:</em>
                     </label>
-                    <input type="text" id="player1_name" name="player_name">
+                    <input type="text" id="player1_name" name="player1">
                 </p>
                 <span class="form_hint_uncorrect">Некорректный формат имени</span>
             </fieldset>
@@ -28,15 +28,15 @@
                     <label for="player2_name">
                         Имя<em>*:</em>
                     </label>
-                    <input type="text" id="player2_name">
+                    <input type="text" id="player2_name" name="player2">
                 </p>
                 <span class="form_hint_uncorrect">Некорректный формат имени</span>
             </fieldset>
         </div>
     </div>
     <p>
-        <button class="btn" type="submit" name="create_match">Создать матч</button>
-        <button class="btn" type="reset" name="clear_form">Очистить форму</button>
+        <button class="btn" type="submit">Создать матч</button>
+        <button class="btn" type="reset">Очистить форму</button>
     </p>
 </form>
 {% endblock %}

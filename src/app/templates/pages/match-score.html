@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <title>Создание матча</title>
+    <link rel="stylesheet" media="screen" href="../../../../../frontend/styles/styles.css">
+</head>
+<body>
+
+<div class="main_container center-screen">
+    <div class="tennis_scoreboard">
+        <div class="scoreboard_row" id="row1">
+            <div class="header_scoreboard" id="name"></div>
+            <div class="header_scoreboard" id="match">Match</div>
+            <div class="header_scoreboard" id="set">Set</div>
+            <div class="header_scoreboard" id="game">Points</div>
+        </div>
+        <div class="scoreboard_row" id="row2">
+            <input class="player_name" id="name1" type="text" value="Hofmhhe" disabled>
+            <div class="match">
+                <input id="match_player1" type="text" value="0" disabled>
+            </div>
+            <div class="set">
+                <input id="set_player1" type="text" value="0" disabled>
+            </div>
+            <div class="game">
+                <input id="game_player1" type="text" value="0" readonly>
+            </div>
+        </div>
+        <div class="scoreboard_row" id="row3">
+            <input class="player_name" id="name2" type="text" value="Visitor" disabled>
+            <div class="match">
+                <input id="match_player2" type="text" value="0" disabled>
+            </div>
+            <div class="set">
+                <input id="set_player2" type="text" value="0" disabled>
+            </div>
+            <div class="game">
+                <input id="game_player2" type="text" value="0" readonly>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
