@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "2f424472-aeaf-431f-8800-e080db20e390",
+		"name": "Tennis-scoreboard",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38114662"
+	},
+	"item": [
+		{
+			"name": "/new-match",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/new-match",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"new-match"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/match-score",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/match-score",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"match-score"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/matches",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/matches",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"matches"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
