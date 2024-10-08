@@ -1,15 +1,15 @@
 from waitress import serve
+from whitenoise import WhiteNoise
+
+from app.mini_framework.request_handler import handle_request
 
 
-def hello_world(environ, start_response):
-    start_response('200 OK', [('Content-Type', 'text/plain')])
-    return [b'Hello, Wodfrld!']
+def run_server(request_handler=handle_request, host="localhost", port=8080) -> None:
+    print(f'Server running on http://{host}:{port}')
+    app = WhiteNoise(request_handler)
+    app.add_files('src/app/static/', prefix='static/')
+    serve(app, host=host, port=port)
 
 
-def run_server(host='127.0.0.1', port='5000'):
-    print(f'Server running on port {port}')
-    serve(hello_world, listen=f'{host}:{port}')
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     run_server()
