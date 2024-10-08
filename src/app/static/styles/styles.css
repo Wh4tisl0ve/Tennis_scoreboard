@@ -1,0 +1,141 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    background-image: url(../images/main-background.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    font-family: "Bradley Hand", cursive;
+    margin: 0;
+    padding: 0;
+}
+
+.new_match_form {
+    background-color: rgba(240, 248, 255, 0.7);
+}
+
+.block_player {
+    display: inline-block;
+    margin: 2px;
+}
+
+.fieldset_player {
+    border: 3px solid #04AA6D;
+    background-color: white;
+}
+
+.legend_name_player {
+    background-color: #000;
+    color: #fff;
+    padding: 3px 6px;
+}
+
+.btn {
+    box-shadow: 3px 2px 3px rgba(0, 0, 0, 0.6);
+    font-size: 15px;
+    padding: 10px 10px;
+    transition-duration: 0.4s;
+    border: 2px solid;
+    color: white;
+    cursor: pointer;
+    font-family: sans-serif;
+}
+
+button[type="submit"]:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+    color: black;
+}
+
+button[type="reset"]:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+    color: black;
+}
+
+button[type="submit"] {
+    background-color: #04AA6D;
+    border-color: #04AA6D;
+}
+
+button[type="reset"] {
+    background-color: red;
+    border-color: red;
+}
+
+.center-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+}
+
+/* styles new_match.html*/
+.tennis_scoreboard {
+    display: table;
+    background-color: white;
+}
+
+.scoreboard_row {
+    display: table-row;
+}
+
+.scoreboard_row div {
+    display: table-cell;
+}
+
+.scoreboard_row input {
+    text-align: center;
+    line-height: 80px;
+    font-weight: bold;
+    font-size: 50px;
+    width: 200px;
+    padding: 10px;
+}
+
+.scoreboard_row input.player_name {
+    width: 300px;
+}
+
+.header_scoreboard {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+.player_name {
+    display: inline-block;
+}
+
+.game input:hover {
+    cursor: pointer;
+}
+
+.game input {
+    color: #50007d;
+}
+
+.set input {
+    background-color: #50007d;
+    color: white;
+}
+
+.match input {
+    background-color: #115E20;
+    color: white;
+}
+
+#name {
+    border: none;
+    background: #E8E8E8 repeating-linear-gradient(-50deg, #555 0, #555 1px, transparent 1px, transparent 5px);
+}
+
