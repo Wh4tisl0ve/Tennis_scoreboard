@@ -48,6 +48,6 @@ class TennisModel(ABC):
         self._child_model._player1_value = 0
         self._child_model._player2_value = 0
 
-    def get_dict(self) -> dict:
+    def to_dict(self) -> dict:
         return {"player1_value": str(self._player1_value),
                 "player2_value": str(self._player2_value)}

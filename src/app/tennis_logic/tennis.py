@@ -1,3 +1,5 @@
+import json
+
 from src.app.tennis_logic.tennis_game import TennisGame
 from src.app.tennis_logic.tennis_match import TennisMatch
 from src.app.tennis_logic.tennis_set import TennisSet
@@ -37,10 +39,13 @@ class Tennis:
         else:
             return 2
 
-    def get_dict(self) -> dict:
+    def to_dict(self) -> dict:
         dict_game = {
-            "game": self.__tennis_game.get_dict(),
-            "set": self.__tennis_set.get_dict(),
-            "match": self.__tennis_match.get_dict()
+            "game": self.__tennis_game.to_dict(),
+            "set": self.__tennis_set.to_dict(),
+            "match": self.__tennis_match.to_dict()
         }
         return dict_game
+
+    def to_json(self) -> json:
+        return json.dumps(self.to_dict())

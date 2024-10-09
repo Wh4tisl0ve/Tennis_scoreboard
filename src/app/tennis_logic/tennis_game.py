@@ -48,6 +48,6 @@ class TennisGame(TennisModel):
         if self._state == State.TIE_BREAK:
             self._last_point = 7
 
-    def get_dict(self) -> dict:
+    def to_dict(self) -> dict:
         return {"player1_value": self.get_value(self._player1_value),
                 "player2_value": self.get_value(self._player2_value)}
