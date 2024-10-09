@@ -3,7 +3,7 @@ from typing import List
 from uuid import UUID
 
 from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column, relationship
-from sqlalchemy import ForeignKey, String
+from sqlalchemy import ForeignKey, String, Boolean
 
 
 class Base(DeclarativeBase):
@@ -17,7 +17,7 @@ class Base(DeclarativeBase):
 
 
 class Players(Base):
-    name: Mapped[str] = mapped_column(String(30), unique=True, nullable=False, index=True)
+    name: Mapped[str] = mapped_column(String(20), unique=True, nullable=False, index=True)
 
     matches_player1: Mapped[List["Matches"]] = relationship("Matches",
                                                             back_populates="player1",
@@ -43,8 +43,9 @@ class Matches(Base):
     uuid: Mapped[UUID] = mapped_column(String(36), default=uuid.uuid4)
     player1_id: Mapped[int] = mapped_column(ForeignKey(Players.id, ondelete="CASCADE"), nullable=False)
     player2_id: Mapped[int] = mapped_column(ForeignKey(Players.id, ondelete="CASCADE"), nullable=False)
-    winner_id: Mapped[int] = mapped_column(ForeignKey(Players.id, ondelete="CASCADE"), nullable=False)
-    score: Mapped[str] = mapped_column(String(255))
+    winner_id: Mapped[int] = mapped_column(ForeignKey(Players.id, ondelete="CASCADE"), nullable=True)
+    is_end_game: Mapped[bool] = mapped_column(Boolean, default=False)
+    score: Mapped[str] = mapped_column(String(255), nullable=True)
 
     player1: Mapped["Players"] = relationship("Players", foreign_keys=[player1_id])
     player2: Mapped["Players"] = relationship("Players", foreign_keys=[player2_id])
