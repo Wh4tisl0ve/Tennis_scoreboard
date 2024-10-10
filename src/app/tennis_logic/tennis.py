@@ -30,6 +30,9 @@ class Tennis:
     def update(self) -> None:
         self.__tennis_set.update()
         self.__tennis_match.update()
+        self.set_end_game()
+
+    def set_end_game(self) -> None:
         if self.__tennis_match.is_last_stage():
             self.__is_game_end = True
 
@@ -49,3 +52,10 @@ class Tennis:
 
     def to_json(self) -> json:
         return json.dumps(self.to_dict())
+
+    def deserialize_json(self, dict_tennis: dict) -> None:
+        self.__tennis_game.deserialize(dict_tennis['game'])
+        self.__tennis_set.deserialize(dict_tennis['set'])
+        self.__tennis_match.deserialize(dict_tennis['match'])
+        self.set_end_game()
+

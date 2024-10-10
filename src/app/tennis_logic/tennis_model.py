@@ -51,3 +51,7 @@ class TennisModel(ABC):
     def to_dict(self) -> dict:
         return {"player1_value": str(self._player1_value),
                 "player2_value": str(self._player2_value)}
+
+    def deserialize(self, dict_serialize: dict):
+        self._player1_value = dict_serialize['player1_value']
+        self._player2_value = dict_serialize['player2_value']
