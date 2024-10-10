@@ -7,36 +7,26 @@
 {% block content %}
 
 <div class="tennis_scoreboard">
-    <div class="scoreboard_row" id="row1">
+    <div class="scoreboard_row" id="row0">
         <div class="header_scoreboard" id="name"></div>
         <div class="header_scoreboard" id="match">Match</div>
         <div class="header_scoreboard" id="set">Set</div>
         <div class="header_scoreboard" id="game">Points</div>
     </div>
-    <div class="scoreboard_row" id="row2">
-        <input class="player_name" id="name1" type="text" value="Hofmhhe" disabled>
+    {% for row_num in range(2) %}
+    <div class="scoreboard_row" id="row{{ row_num + 1 }}">
+        <input class="player_name" id="name{{ row_num + 1}}" type="text" value="Hofmhhe" disabled>
         <div class="match">
-            <input id="match_player1" type="text" value="0" disabled>
+            <input id="match_player{{ row_num + 1}}" type="text" value="0" disabled>
         </div>
         <div class="set">
-            <input id="set_player1" type="text" value="0" disabled>
+            <input id="set_player{{ row_num + 1}}" type="text" value="0" disabled>
         </div>
         <div class="game">
-            <input id="game_player1" type="text" value="0" readonly>
+            <input id="game_player{{ row_num + 1}}" type="text" value="0" readonly>
         </div>
     </div>
-    <div class="scoreboard_row" id="row3">
-        <input class="player_name" id="name2" type="text" value="Visitor" disabled>
-        <div class="match">
-            <input id="match_player2" type="text" value="0" disabled>
-        </div>
-        <div class="set">
-            <input id="set_player2" type="text" value="0" disabled>
-        </div>
-        <div class="game">
-            <input id="game_player2" type="text" value="0" readonly>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 {% endblock %}
 
