@@ -50,12 +50,23 @@ class Tennis:
         }
         return dict_game
 
-    def to_json(self) -> json:
-        return json.dumps(self.to_dict())
+    def to_render(self) -> dict:
+        dict_game = {
+            "game": self.__tennis_game.to_render(),
+            "set": self.__tennis_set.to_dict(),
+            "match": self.__tennis_match.to_dict()
+        }
+        return dict_game
 
-    def deserialize_json(self, dict_tennis: dict) -> None:
-        self.__tennis_game.deserialize(dict_tennis['game'])
-        self.__tennis_set.deserialize(dict_tennis['set'])
-        self.__tennis_match.deserialize(dict_tennis['match'])
-        self.set_end_game()
+    def status_to_dict(self) -> dict:
+        dict_status = {
+            "game_status": self.__tennis_game.state,
+            "set_status": self.__tennis_set.state,
+            "match_status": self.__tennis_match.state
+        }
+        return dict_status
 
+    def deserialize_dict(self, dict_tennis: dict, dict_state: dict) -> None:
+        self.__tennis_game.deserialize(dict_tennis['game'], dict_state.get('game_status', 0))
+        self.__tennis_set.deserialize(dict_tennis['set'], dict_state.get('set_status', 0))
+        self.__tennis_match.deserialize(dict_tennis['match'], dict_state.get('match_status', 0))

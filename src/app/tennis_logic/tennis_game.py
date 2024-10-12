@@ -48,6 +48,11 @@ class TennisGame(TennisModel):
         if self._state == State.TIE_BREAK:
             self._last_point = 7
 
-    def to_dict(self) -> dict:
+    def deserialize(self, dict_serialize: dict, state: int):
+        self._player1_value = int(dict_serialize['player1_value'])
+        self._player2_value = int(dict_serialize['player2_value'])
+        self.set_state(State.get_state_by_value(state))
+
+    def to_render(self) -> dict:
         return {"player1_value": self.get_value(self._player1_value),
                 "player2_value": self.get_value(self._player2_value)}

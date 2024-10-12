@@ -19,6 +19,10 @@ class TennisModel(ABC):
     def player2_value(self) -> int:
         return self._player2_value
 
+    @property
+    def state(self) -> int:
+        return self._state.value
+
     def set_state(self, state: State) -> None:
         self._state = state
         self._child_model.set_state(state)
@@ -52,6 +56,7 @@ class TennisModel(ABC):
         return {"player1_value": str(self._player1_value),
                 "player2_value": str(self._player2_value)}
 
-    def deserialize(self, dict_serialize: dict):
-        self._player1_value = dict_serialize['player1_value']
-        self._player2_value = dict_serialize['player2_value']
+    def deserialize(self, dict_serialize: dict, state: int):
+        self._player1_value = int(dict_serialize['player1_value'])
+        self._player2_value = int(dict_serialize['player2_value'])
+        self._state = State.get_state_by_value(state)
