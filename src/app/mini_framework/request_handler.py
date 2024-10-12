@@ -12,10 +12,13 @@ def handle_request(environ, start_response):
 
     handler = app.get_handlers(request_uri, request_method)
 
-    query_params = {k: v[0] for k, v in query_params.items()}
-    query_params['input_data'] = parse_qs(environ['wsgi.input'].read().decode('utf-8'))
+    query_params = unpack_dict_values(query_params)
+    query_params['input_data'] = unpack_dict_values(parse_qs(environ['wsgi.input'].read().decode('utf-8')))
     query_params['method'] = request_method
-
+    print(query_params)
     response = handler(query_params, start_response)
     return [response.encode()]
 
+
+def unpack_dict_values(params: dict) -> dict:
+    return {k: v[0] for k, v in params.items()}

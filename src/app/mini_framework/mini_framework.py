@@ -22,12 +22,11 @@ class MiniFrameWork:
 
         raise Exception("Endpoint не найден")
 
-    def render_template(self, template_name: str) -> str:
+    def render_template(self, *args, **kwargs) -> str:
         file_loader = FileSystemLoader('src/app/templates')
         env = Environment(loader=file_loader)
 
-        template = env.get_template(template_name)
-
-        rendered_template = template.render()
+        template = env.get_template(args[0])
+        rendered_template = template.render(data=kwargs.get('data'))
 
         return rendered_template
