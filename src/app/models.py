@@ -1,9 +1,10 @@
 import uuid
+import datetime
 from typing import List
 from uuid import UUID
 
 from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column, relationship
-from sqlalchemy import ForeignKey, String, Boolean
+from sqlalchemy import ForeignKey, String, Boolean, JSON, Integer, DateTime, func
 
 
 class Base(DeclarativeBase):
@@ -45,7 +46,6 @@ class Matches(Base):
     player2_id: Mapped[int] = mapped_column(ForeignKey(Players.id, ondelete="CASCADE"), nullable=False)
     winner_id: Mapped[int] = mapped_column(ForeignKey(Players.id, ondelete="CASCADE"), nullable=True)
     is_end_game: Mapped[bool] = mapped_column(Boolean, default=False)
-    score: Mapped[str] = mapped_column(String(255), nullable=True)
 
     player1: Mapped["Players"] = relationship("Players", foreign_keys=[player1_id])
     player2: Mapped["Players"] = relationship("Players", foreign_keys=[player2_id])
@@ -56,8 +56,26 @@ class Matches(Base):
                 f"uuid={self.uuid},"
                 f"player1={self.player1_id},"
                 f"player2={self.player2_id},"
-                f"winner={self.winner_id},"
-                f"score={self.score})")
+                f"winner={self.winner_id})")
+
+    def __repr__(self):
+        return str(self)
+
+
+class MatchStory(Base):
+    id_match: Mapped[int] = mapped_column(ForeignKey(Matches.id, ondelete="CASCADE"), nullable=False)
+    score: Mapped[dict] = mapped_column(JSON, nullable=False)
+    match_status: Mapped[dict] = mapped_column(JSON, nullable=False)
+    player_goal: Mapped[int] = mapped_column(Integer, nullable=True)
+
+    match: Mapped["Matches"] = relationship("Matches", foreign_keys=[id_match])
+
+    def __str__(self):
+        return (f"{self.__class__.__name__}(id={self.id},"
+                f"id_match={self.id_match},"
+                f"score={self.score},"
+                f"match_status={self.match_status},"
+                f"player_goal={self.player_goal})")
 
     def __repr__(self):
         return str(self)
