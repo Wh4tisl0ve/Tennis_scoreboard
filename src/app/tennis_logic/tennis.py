@@ -17,7 +17,6 @@ class Tennis:
         return self.__is_game_end
 
     def player1_goals(self) -> None:
-        # эту проверку можно вынести ещё выше
         if not self.__is_game_end:
             self.__tennis_game.add_value_player1()
             self.update()
@@ -70,3 +69,4 @@ class Tennis:
         self.__tennis_game.deserialize(dict_tennis['game'], dict_state.get('game_status', 0))
         self.__tennis_set.deserialize(dict_tennis['set'], dict_state.get('set_status', 0))
         self.__tennis_match.deserialize(dict_tennis['match'], dict_state.get('match_status', 0))
+        self.set_end_game()

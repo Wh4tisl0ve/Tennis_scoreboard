@@ -15,7 +15,7 @@ def handle_request(environ, start_response):
     query_params = unpack_dict_values(query_params)
     query_params['input_data'] = unpack_dict_values(parse_qs(environ['wsgi.input'].read().decode('utf-8')))
     query_params['method'] = request_method
-    print(query_params)
+
     response = handler(query_params, start_response)
     return [response.encode()]
 

@@ -1,5 +1,3 @@
-from typing import Generator
-
 from sqlalchemy.orm.session import Session
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
@@ -18,7 +16,7 @@ class DataBaseEngine:
     def dispose(self) -> None:
         self.engine.dispose()
 
-    def get_session(self) :
+    def get_session(self) -> Session:
         with self.session_factory() as session:
             return session
 
