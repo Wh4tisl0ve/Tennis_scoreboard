@@ -7,27 +7,37 @@
 {% block content %}
 
 <div class="tennis_scoreboard">
-    <div class="scoreboard_row" id="row0">
-        <div class="header_scoreboard" id="name"></div>
-        <div class="header_scoreboard" id="match">Match</div>
-        <div class="header_scoreboard" id="set">Set</div>
-        <div class="header_scoreboard" id="game">Points</div>
+    <div class="tennis_scoreboard_header">Счет теннисного матча</div>
+    <form class="player_goal_form" method="post" name="player_goal" action="/match-score?uuid={{ data['uuid'] }}">
+        <div class="scoreboard_row">
+            <div class="header_scoreboard" id="name"></div>
+            <div class="header_scoreboard" id="match">Match</div>
+            <div class="header_scoreboard" id="set">Set</div>
+            <div class="header_scoreboard" id="game">Points</div>
+        </div>
+        {% for id_player in range(2) %}
+        <div class="scoreboard_row">
+            <input id="player{{ id_player + 1 }}_name" type="text"
+                   value="{{ data.get('player' ~ (id_player + 1) ~ '_name') }}" disabled>
+            <div class="match">
+                <input id="match_player{{ id_player + 1 }}" type="text"
+                       value="{{ data['tennis']['match']['player' ~ (id_player + 1) ~ '_value'] }}" disabled>
+            </div>
+            <div class="set">
+                <input type="text"
+                       value="{{ data['tennis']['set']['player' ~ (id_player + 1) ~ '_value'] }}" disabled>
+            </div>
+            <div class="game">
+                <button id="player{{ id_player + 1 }}_goal" class="player_goal" type="submit" onclick="clickButtonGoalHandler(this.value)" name="player_id"
+                        value="{{ id_player + 1 }}">
+                    {{ data['tennis']['game']['player' ~ (id_player + 1) ~ '_value'] }}
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </form>
+    <div class="tennis_scoreboard_footer">
+        <div class="status_game"><b>Статус:</b> В процессе</div>
     </div>
-    {% for row_num in range(2) %}
-    <div class="scoreboard_row" id="row{{ row_num + 1 }}">
-        <input class="player_name" id="name{{ row_num + 1}}" type="text" value="Hofmhhe" disabled>
-        <div class="match">
-            <input id="match_player{{ row_num + 1}}" type="text" value="0" disabled>
-        </div>
-        <div class="set">
-            <input id="set_player{{ row_num + 1}}" type="text" value="0" disabled>
-        </div>
-        <div class="game">
-            <input id="game_player{{ row_num + 1}}" type="text" value="0" readonly>
-        </div>
-    </div>
-    {% endfor %}
 </div>
 {% endblock %}
-
-# TODO: сделать блоки через циклы, они все равно повторяются

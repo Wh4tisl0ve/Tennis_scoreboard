@@ -50,24 +50,24 @@ body {
     font-family: sans-serif;
 }
 
-button[type="submit"]:hover {
+#create-match:hover {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
     background-color: white;
     color: black;
 }
 
-button[type="reset"]:hover {
+#clear_form:hover {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
     background-color: white;
     color: black;
 }
 
-button[type="submit"] {
+#create-match {
     background-color: #04AA6D;
     border-color: #04AA6D;
 }
 
-button[type="reset"] {
+#clear_form {
     background-color: red;
     border-color: red;
 }
@@ -80,7 +80,12 @@ button[type="reset"] {
     min-height: 100vh;
 }
 
-/* styles new_match.html*/
+/* styles match-score.html*/
+@font-face {
+    font-family: "DS-DIGITAL";
+    src: url("../fonts/ds-digital/DS-DIGI.TTF");
+}
+
 .tennis_scoreboard {
     display: table;
     background-color: white;
@@ -94,13 +99,14 @@ button[type="reset"] {
     display: table-cell;
 }
 
-.scoreboard_row input {
+.scoreboard_row input, .player_goal {
     text-align: center;
     line-height: 80px;
     font-weight: bold;
     font-size: 50px;
     width: 200px;
     padding: 10px;
+    font-family: "DS-DIGITAL", serif;
 }
 
 .scoreboard_row input.player_name {
@@ -116,11 +122,13 @@ button[type="reset"] {
     display: inline-block;
 }
 
-.game input:hover {
+.player_goal:hover {
     cursor: pointer;
 }
 
-.game input {
+.player_goal {
+    box-sizing: content-box;
+    background-color: white;
     color: #50007d;
 }
 
@@ -132,6 +140,11 @@ button[type="reset"] {
 .match input {
     background-color: #115E20;
     color: white;
+}
+
+.winner {
+    background: url(../images/winner-icon.png) no-repeat top left transparent;
+    background-size: 50px;
 }
 
 #name {
