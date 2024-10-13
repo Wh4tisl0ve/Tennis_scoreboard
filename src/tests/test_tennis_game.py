@@ -30,7 +30,7 @@ class TestTennisGame:
         for _ in range(cnt_goals):
             self.__tennis.player1_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player_point = tennis_info['game']['player1_value']
 
         assert player_point == result
@@ -42,7 +42,7 @@ class TestTennisGame:
         for _ in range(cnt_goals):
             self.__tennis.player2_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player_point = tennis_info['game']['player2_value']
 
         assert player_point == result
@@ -55,7 +55,7 @@ class TestTennisGame:
 
         self.__tennis.player1_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player1_point = tennis_info['game']['player1_value']
         player2_point = tennis_info['game']['player2_value']
 
@@ -69,7 +69,7 @@ class TestTennisGame:
 
         self.__tennis.player2_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player1_point = tennis_info['game']['player1_value']
         player2_point = tennis_info['game']['player2_value']
 
@@ -83,7 +83,7 @@ class TestTennisGame:
         self.__tennis.player2_goals()
         self.__tennis.player1_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player1_point = tennis_info['game']['player1_value']
         player2_point = tennis_info['game']['player2_value']
 
@@ -97,7 +97,7 @@ class TestTennisGame:
         self.__tennis.player1_goals()
         self.__tennis.player2_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player1_point = tennis_info['game']['player1_value']
         player2_point = tennis_info['game']['player2_value']
 
@@ -111,7 +111,7 @@ class TestTennisGame:
         self.__tennis.player1_goals()
         self.__tennis.player1_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player1_point = tennis_info['game']['player1_value']
         player2_point = tennis_info['game']['player2_value']
 
@@ -125,7 +125,7 @@ class TestTennisGame:
         self.__tennis.player2_goals()
         self.__tennis.player2_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player1_point = tennis_info['game']['player1_value']
         player2_point = tennis_info['game']['player2_value']
 

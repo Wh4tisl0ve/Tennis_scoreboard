@@ -23,7 +23,7 @@ class TestTennisSet:
         for _ in range(cnt_goals):
             self.__tennis.player1_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player_value_set = tennis_info['set']['player1_value']
 
         assert player_value_set == result
@@ -35,7 +35,7 @@ class TestTennisSet:
         for _ in range(cnt_goals):
             self.__tennis.player2_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player_value_set = tennis_info['set']['player2_value']
 
         assert player_value_set == result
@@ -57,7 +57,7 @@ class TestTennisSet:
         self.__tennis.player1_goals()
         self.__tennis.player1_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player1_point = tennis_info['set']['player1_value']
         player2_point = tennis_info['set']['player2_value']
 
@@ -72,7 +72,7 @@ class TestTennisSet:
         self.__tennis.player2_goals()
         self.__tennis.player2_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player1_point = tennis_info['set']['player1_value']
         player2_point = tennis_info['set']['player2_value']
 
@@ -92,7 +92,7 @@ class TestTennisSet:
         """Проверка работы механизма сброса очков в сете, после победы 1 игрока в матче"""
         result = '0'
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player1_point = tennis_info['set']['player1_value']
         player2_point = tennis_info['set']['player2_value']
 
@@ -112,7 +112,7 @@ class TestTennisSet:
         """Проверка работы механизма сброса очков в сете, после победы 2 игрока в матче"""
         result = '0'
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player1_point = tennis_info['set']['player1_value']
         player2_point = tennis_info['set']['player2_value']
 
@@ -142,7 +142,7 @@ class TestTennisSet:
         self.__tennis.player1_goals()
         self.__tennis.player2_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player1_point = tennis_info['game']['player1_value']
         player2_point = tennis_info['game']['player2_value']
 
@@ -168,7 +168,7 @@ class TestTennisSet:
         for _ in range(cnt_goals):
             self.__tennis.player1_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player1_point = tennis_info['game']['player1_value']
 
         assert player1_point == result
@@ -181,7 +181,7 @@ class TestTennisSet:
         for _ in range(cnt_goals):
             self.__tennis.player2_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player2_point = tennis_info['game']['player2_value']
 
         assert player2_point == result
@@ -205,7 +205,7 @@ class TestTennisSet:
         self.__tennis.player1_goals()
         self.__tennis.player1_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player1_point = tennis_info['set']['player1_value']
         player2_point = tennis_info['set']['player2_value']
 
@@ -224,7 +224,7 @@ class TestTennisSet:
 
         self.__tennis.player1_goals()
 
-        tennis_info = self.__tennis.get_dict()
+        tennis_info = self.__tennis.to_render()
         player1_point = tennis_info['game']['player1_value']
         player2_point = tennis_info['game']['player2_value']
 
