@@ -28,7 +28,8 @@
                        value="{{ data['tennis']['set']['player' ~ (id_player + 1) ~ '_value'] }}" disabled>
             </div>
             <div class="game">
-                <button id="player{{ id_player + 1 }}_goal" class="player_goal" type="submit" onclick="clickButtonGoalHandler(this.value)" name="player_id"
+                <button id="player{{ id_player + 1 }}_goal" class="player_goal" type="submit"
+                        onclick="clickButtonGoalHandler(this.value)" name="player_id"
                         value="{{ id_player + 1 }}">
                     {{ data['tennis']['game']['player' ~ (id_player + 1) ~ '_value'] }}
                 </button>
