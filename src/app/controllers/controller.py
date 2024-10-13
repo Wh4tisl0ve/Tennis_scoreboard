@@ -1,9 +1,9 @@
 from app.mini_framework import app
 from app.models import MatchStory
 from app.services.match_create_service import match_create_service
-from app.repository.players_repository import players_repo
 from app.repository.matches_repository import matches_repo
 from app.repository.match_story_repository import matches_story_repo
+from app.services.match_score_service import match_score_service
 from app.tennis_logic.tennis import Tennis
 
 
@@ -22,7 +22,9 @@ def create_new_match(request: dict, start_response) -> str:
 
     tennis = Tennis()
 
-    match_story_record = MatchStory(id_match=new_match.id, score=tennis.to_dict(), match_status=tennis.status_to_dict())
+    match_story_record = MatchStory(id_match=new_match.id,
+                                    score=tennis.to_dict(),
+                                    match_status=tennis.status_to_dict())
     matches_story_repo.add(match_story_record)
 
     start_response('302 Redirect', [('Location', f'/match-score?uuid={new_match.uuid}')])
@@ -35,18 +37,10 @@ def get_match_score(request: dict, start_response) -> str:
     uuid = request.get('uuid')
     match = matches_repo.find_by_uuid(uuid)
 
-    player1 = players_repo.find_by_id(match.player1_id)
-    player2 = players_repo.find_by_id(match.player2_id)
+    tennis = match_score_service.deserialize_tennis(match)
 
-    last_record_story = matches_story_repo.get_last_record_story_by_match_id(match.id)
-
-    tennis = Tennis()
-    tennis.deserialize_dict(last_record_story.score, last_record_story.match_status)
-
-    tennis_serialize = {"uuid": uuid,
-                        "player1_name": player1.name,
-                        "player2_name": player2.name,
-                        "tennis": tennis.to_render()}
+    tennis_serialize = match_score_service.serialize_tennis(match)
+    tennis_serialize['tennis'] = tennis.to_render()
 
     start_response('200 OK', [('Content-Type', 'text/html')])
     return app.render_template('pages/match-score.html', data=tennis_serialize)
@@ -55,22 +49,16 @@ def get_match_score(request: dict, start_response) -> str:
 @app.route(r'^\/match-score', methods=['POST'])
 def player_scored(request: dict, start_response) -> str:
     num_player_scored = request.get('input_data').get('player_id')
-    # возможно здесь будет сервис с определением победителя и тд
+
     uuid = request.get('uuid')
     match = matches_repo.find_by_uuid(uuid)
 
-    last_record_story = matches_story_repo.get_last_record_story_by_match_id(match.id)
+    tennis = match_score_service.deserialize_tennis(match)
 
-    tennis = Tennis()
-    tennis.deserialize_dict(last_record_story.score, last_record_story.match_status)
-
-    if num_player_scored == '1':
-        tennis.player1_goals()
+    if tennis.is_end_game:
+        match_score_service.add_winner(tennis, match)
     else:
-        tennis.player2_goals()
-
-    match_story_record = MatchStory(id_match=match.id, score=tennis.to_dict(), match_status=tennis.status_to_dict())
-    matches_story_repo.add(match_story_record)
+        match_score_service.player_goals(num_player_scored, tennis, match)
 
     start_response('302 Redirect', [('Location', f'/match-score?uuid={match.uuid}')])
     return ''
