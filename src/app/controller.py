@@ -1,4 +1,5 @@
 from app.mini_framework import app
+from app.mini_framework.pagination.pagination import Pagination
 from app.models import MatchStory
 from app.services.match_create_service import match_create_service
 from app.repository.matches_repository import matches_repo
@@ -55,15 +56,27 @@ def player_scored(request: dict, start_response) -> str:
 
     tennis = match_score_service.deserialize_tennis(match)
 
+    match_score_service.player_goals(num_player_scored, tennis, match)
+
     if tennis.is_end_game:
         match_score_service.add_winner(tennis, match)
-    else:
-        match_score_service.player_goals(num_player_scored, tennis, match)
 
     start_response('302 Redirect', [('Location', f'/match-score?uuid={match.uuid}')])
     return ''
 
 
 @app.route(r'^\/matches', methods=['GET'])
-def get_played_matches(request: dict) -> str:
-    return '<h1>Get all played match</h1>'
+def get_played_matches(request: dict, start_response) -> str:
+    player_name_filter = request.get('filter_by_player_name', '')
+    page_num = request.get('page', 1)
+
+    finished_matches = matches_repo.find_finished_matches_by_player_name(player_name_filter)
+
+    pagination = Pagination(finished_matches)
+    print(pagination.links)
+
+    start_response('200 OK', [('Content-Type', 'text/html')])
+
+    return app.render_template('pages/finished_matches.html',
+                               data=finished_matches,
+                               pagination=pagination)
