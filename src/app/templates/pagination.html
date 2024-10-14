@@ -1,0 +1,7 @@
+<div class="pagination">
+    <a href="?page={{ data['current_page'] - 1 }}">«</a>
+    {% for i in range(data['total_record']) %}
+    <a href="?page={{ i + 1 }}">{{ i + 1 }}</a>
+    {% endfor %}
+    <a href="?page={{ data['current_page'] + 1 }}">»</a>
+</div>

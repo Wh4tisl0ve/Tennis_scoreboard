@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Завершенные матчи
+{% endblock %}
+
+{% block content %}
+<div class="table-container">
+    <table class="finished_matches_table">
+        <caption>Сыгранные матчи</caption>
+        <thead>
+        <tr>
+            <th>UUID</th>
+            <th>Player 1</th>
+            <th>Player 2</th>
+            <th>Winner</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for match in data %}
+        <tr>
+            <td>{{ match.uuid }}</td>
+            <td>{{ match.player1_name }}</td>
+            <td>{{ match.player2_name }}</td>
+            <td>{{ match.winner }}</td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

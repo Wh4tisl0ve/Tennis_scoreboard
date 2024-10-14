@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block styles %}
+<script src="static/scripts/script.js"></script>
+{% endblock %}
+
 {% block title %}
 Теннисный матч
 {% endblock %}
@@ -16,7 +20,7 @@
             <div class="header_scoreboard" id="game">Points</div>
         </div>
         {% for id_player in range(2) %}
-        <div class="scoreboard_row">
+        <div class="scoreboard_row" id="player{{ id_player + 1 }}_row">
             <input id="player{{ id_player + 1 }}_name" type="text"
                    value="{{ data.get('player' ~ (id_player + 1) ~ '_name') }}" disabled>
             <div class="match">
@@ -29,7 +33,7 @@
             </div>
             <div class="game">
                 <button id="player{{ id_player + 1 }}_goal" class="player_goal" type="submit"
-                        onclick="clickButtonGoalHandler(this.value)" name="player_id"
+                        name="player_id"
                         value="{{ id_player + 1 }}">
                     {{ data['tennis']['game']['player' ~ (id_player + 1) ~ '_value'] }}
                 </button>
@@ -38,7 +42,7 @@
         {% endfor %}
     </form>
     <div class="tennis_scoreboard_footer">
-        <div class="status_game"><b>Статус:</b> В процессе</div>
+        <b>Статус: </b><span id="status_game_title">В процессе</span>
     </div>
 </div>
 {% endblock %}
