@@ -7,19 +7,35 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
-document.addEventListener('DOMContentLoaded', () => checkWinner());
+document.addEventListener('DOMContentLoaded', () => renderEndGame(getWinnerId()));
 
-function checkWinner() {
+function renderEndGame(winner_id) {
+    const enemy_dict = {
+        1: 2, 2: 1
+    }
+
+    if (winner_id !== 0) {
+        document.getElementById(`player${winner_id}_name`).classList.add("winner");
+        document.getElementById(`player${enemy_dict[winner_id]}_row`).classList.add("looser");
+        document.getElementById('status_game_title').textContent = 'Завершена'
+
+        disableButtonsGoals();
+    }
+}
+
+
+function getWinnerId() {
     let match_win_value = 2;
 
     if (document.getElementById('match_player1').value == match_win_value) {
-        document.getElementById('player1_name').classList.add("winner");
-        disableButtonsGoals();
+        return 1;
     }
+
     if (document.getElementById('match_player2').value == match_win_value) {
-        document.getElementById('player2_name').classList.add("winner");
-        disableButtonsGoals();
+        return 2;
     }
+
+    return 0;
 }
 
 function disableButtonsGoals() {
