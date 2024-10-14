@@ -27,6 +27,7 @@ class MiniFrameWork:
         env = Environment(loader=file_loader)
 
         template = env.get_template(args[0])
-        rendered_template = template.render(data=kwargs.get('data'))
+        rendered_template = template.render(data=kwargs.get('data'),
+                                            pagination=kwargs.get('pagination', None))
 
         return rendered_template
