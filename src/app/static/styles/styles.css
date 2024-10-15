@@ -216,6 +216,11 @@ nav a:hover {
     background: #E8E8E8 repeating-linear-gradient(-50deg, #555 0, #555 1px, transparent 1px, transparent 5px);
 }
 
+.table-container{
+    background-color: white;
+    margin-top: 10px;
+}
+
 .finished_matches_table.table {
     border-collapse: collapse;
     font-size: 16px;
