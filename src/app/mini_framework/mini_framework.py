@@ -28,6 +28,6 @@ class MiniFrameWork:
 
         template = env.get_template(args[0])
         rendered_template = template.render(data=kwargs.get('data'),
-                                            pagination=kwargs.get('pagination', None))
+                                            pagination=kwargs.get('pagination'))
 
         return rendered_template

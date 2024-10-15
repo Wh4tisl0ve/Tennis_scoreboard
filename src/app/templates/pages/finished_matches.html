@@ -7,7 +7,23 @@
 {% block content %}
 <div class="table-container">
     <table class="finished_matches_table">
-        <caption>Сыгранные матчи</caption>
+        <h1>Завершенные матчи</h1>
+        <hr>
+        <div class="filters">
+            <label>
+                Имя игрока:
+                <input type="text" placeholder="Имя игрока"/>
+            </label>
+            <label>
+                Количество записей:
+                <select name="per_page" id="page-select">
+                    <option value="five">5</option>
+                    <option value="ten">10</option>
+                    <option value="fifteen">15</option>
+                </select>
+            </label>
+            <button>Применить фильтр</button>
+        </div>
         <thead>
         <tr>
             <th>UUID</th>
@@ -19,7 +35,7 @@
         <tbody>
         {% for match in data %}
         <tr>
-            <td>{{ match.uuid }}</td>
+            <td><a href="/match-story={{ match.uuid }}">{{ match.uuid }}</a></td>
             <td>{{ match.player1_name }}</td>
             <td>{{ match.player2_name }}</td>
             <td>{{ match.winner }}</td>
@@ -27,6 +43,7 @@
         </tbody>
         {% endfor %}
     </table>
+    {{ pagination.info }}
     {{ pagination.links }}
 </div>
 {% endblock %}
