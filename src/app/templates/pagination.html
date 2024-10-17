@@ -1,33 +1,33 @@
 {%- macro display_first_five_pages() %}
     {% for i in range(5) %}
-        <a href="?page={{ i + 1 }}" {% if i + 1 == data['current_page'] %}class="active"{% endif %}>
+        <a id="page_num{{ i + 1 }}" href="?page={{ i + 1 }}">
             {{ i + 1 }}
         </a>
     {% endfor %}
     <a> .. </a>
-    <a href="?page={{ data['total_pages'] }}" {% if data['total_pages'] == data['current_page'] %}class="active"{% endif %}>
+    <a id="page_num{{ data['total_pages'] }}" href="?page={{ data['total_pages'] }}">
         {{ data['total_pages'] }}
     </a>
 {%- endmacro -%}
 
 {%- macro display_last_five_pages() %}
-    <a href="?page=1" {% if 1 == data['current_page'] %}class="active"{% endif %}>1</a>
+    <a id="page_num1" href="?page=1">1</a>
     <a> .. </a>
     {% for i in range(data['total_pages'] - 5, data['total_pages']) %}
-        <a href="?page={{ i + 1 }}" {% if i + 1 == data['current_page'] %}class="active"{% endif %}>
+        <a id="page_num{{ i + 1 }}" href="?page={{ i + 1 }}">
             {{ i + 1 }}
         </a>
     {% endfor %}
 {%- endmacro -%}
 
 {%- macro display_middle_pages() %}
-    <a href="?page=1" {% if 1 == data['current_page'] %}class="active"{% endif %}>1</a>
+    <a id="page_num1" href="?page=1">1</a>
     <a> .. </a>
     {% for i in range(data['current_page'] - 3, data['current_page'] + 2) %}
-        <a href="?page={{ i + 1 }}" {% if i + 1 == data['current_page'] %}class="active"{% endif %}>{{ i + 1 }}</a>
+        <a id="page_num{{ i + 1 }}" href="?page={{ i + 1 }}">{{ i + 1 }}</a>
     {% endfor %}
     <a> .. </a>
-    <a href="?page={{ data['total_pages'] }}" {% if data['total_pages'] == data['current_page'] %}class="active"{% endif %}>
+    <a id="page_num{{ data['total_pages'] }}" href="?page={{ data['total_pages'] }}">
         {{ data['total_pages'] }}
     </a>
 {%- endmacro -%}
@@ -35,12 +35,12 @@
 {%- macro get_num_paginate() -%}
     {% if data['total_pages'] <= 10 %}
         {% for i in range(data['total_pages']) %}
-            <a href="?page={{ i + 1 }}" {% if i + 1 == data['current_page'] %}class="active"{% endif %}>{{ i + 1 }}</a>
+            <a id="page_num{{ i + 1 }}" href="?page={{ i + 1 }}">{{ i + 1 }}</a>
         {% endfor %}
     {% else %}
-        {% if data['current_page'] <= 5 %}
+        {% if data['current_page'] <= 4 %}
             {{ display_first_five_pages() }}
-        {% elif data['current_page'] >= data['total_pages'] - 4 %}
+        {% elif data['current_page'] >= data['total_pages'] - 3 %}
             {{ display_last_five_pages() }}
         {% else %}
             {{ display_middle_pages() }}

@@ -15,7 +15,7 @@
         <hr>
         <i>Фильтры</i>
         <div class="filters">
-            <form name="filter-name">
+            <form name="filter-name" onsubmit="return saveFilterInLocalStorage()">
                 <label>
                     Имя игрока:
                     <input type="text" id='filter_player' name='filter_by_player_name' placeholder="Имя игрока"/>
@@ -28,31 +28,35 @@
                         <option value="15">15</option>
                     </select>
                 </label>
-                <button type="submit">Применить</button>
+                <hr>
+                <div>
+                    <button class="set-filter" type="submit" onclick="setQueryStringInPageLink()">Применить</button>
+                    <a href="/matches" onclick="clearLocalStorage()">Сбросить</a>
+                </div>
             </form>
         </div>
         <thead>
         <hr>
         {% if data %}
-            <tr>
-                <th>UUID</th>
-                <th>Player 1</th>
-                <th>Player 2</th>
-                <th>Winner</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for match in data %}
-            <tr>
-                <td><a href="/match-story={{ match.uuid }}">{{ match.uuid }}</a></td>
-                <td>{{ match.player1_name }}</td>
-                <td>{{ match.player2_name }}</td>
-                <td>{{ match.winner }}</td>
-            </tr>
-            </tbody>
-            {% endfor %}
+        <tr>
+            <th>UUID</th>
+            <th>Player 1</th>
+            <th>Player 2</th>
+            <th>Winner</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for match in data %}
+        <tr>
+            <td><a href="/match-story={{ match.uuid }}">{{ match.uuid }}</a></td>
+            <td>{{ match.player1_name }}</td>
+            <td>{{ match.player2_name }}</td>
+            <td>{{ match.winner }}</td>
+        </tr>
+        </tbody>
+        {% endfor %}
         {% else %}
-            Ничего не найдено :(
+        Ничего не найдено :(
         {% endif %}
     </table>
     <hr>
