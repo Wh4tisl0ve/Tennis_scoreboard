@@ -1,14 +1,22 @@
+import urllib.parse
 from math import ceil
 
 from app.mini_framework import app
 
 
 class Pagination:
-    def __init__(self, total_records: int, items_per_page: int = 10, current_page: int = 1):
+    def __init__(self, total_records: int, filters: dict, items_per_page: int = 10, current_page: int = 1):
         self.__total_records = total_records
         self.__items_per_page = items_per_page
         self.__current_page = current_page
         self.__total_pages = ceil(total_records / items_per_page)
+        self.__filters = filters
+
+    @property
+    def filters(self) -> str:
+        params = {k: v for k, v in self.__filters.items() if v}
+        query_string = urllib.parse.urlencode(params)
+        return '&' + query_string if query_string else ''
 
     @property
     def links(self) -> str:
@@ -17,7 +25,8 @@ class Pagination:
                              'current_page': self.__current_page}
 
         return app.render_template('pagination.html',
-                                   data=pagination_config)
+                                   data=pagination_config,
+                                   filters=self.filters)
 
     @property
     def info(self) -> str:

@@ -15,7 +15,7 @@
         <hr>
         <i>Фильтры</i>
         <div class="filters">
-            <form name="filter-name" onsubmit="return saveFilterInLocalStorage()">
+            <form name="filter-name">
                 <label>
                     Имя игрока:
                     <input type="text" id='filter_player' name='filter_by_player_name' placeholder="Имя игрока"/>
@@ -30,8 +30,8 @@
                 </label>
                 <hr>
                 <div>
-                    <button class="set-filter" type="submit" onclick="setQueryStringInPageLink()">Применить</button>
-                    <a href="/matches" onclick="clearLocalStorage()">Сбросить</a>
+                    <button class="set-filter" type="submit">Применить</button>
+                    <a href="/matches">Сбросить</a>
                 </div>
             </form>
         </div>

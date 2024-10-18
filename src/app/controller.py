@@ -69,12 +69,16 @@ def player_scored(request: dict, start_response) -> str:
 def get_played_matches(request: dict, start_response) -> str:
     player_name_filter = request.get('filter_by_player_name', '')
     page_num = int(request.get('page', 1))
-    items_per_page = 10
+    items_per_page = int(request.get('per_page', 10))
 
     finished_matches = matches_repo.find_finished_matches(player_name_filter, page_num, items_per_page)
-    count_records = matches_repo.find_count_finished_matches()
+    count_records = matches_repo.find_count_finished_matches(player_name_filter)
 
-    pagination = Pagination(count_records, current_page=page_num, items_per_page=items_per_page)
+    pagination = Pagination(count_records,
+                            current_page=page_num,
+                            items_per_page=items_per_page,
+                            filters={'filter_by_player_name': player_name_filter,
+                                     'per_page': items_per_page})
 
     start_response('200 OK', [('Content-Type', 'text/html')])
 

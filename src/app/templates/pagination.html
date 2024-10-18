@@ -1,33 +1,33 @@
 {%- macro display_first_five_pages() %}
     {% for i in range(5) %}
-        <a id="page_num{{ i + 1 }}" href="?page={{ i + 1 }}">
+        <a id="page_num{{ i + 1 }}" href="?page={{ i + 1 }}{{ filters }}">
             {{ i + 1 }}
         </a>
     {% endfor %}
     <a> .. </a>
-    <a id="page_num{{ data['total_pages'] }}" href="?page={{ data['total_pages'] }}">
+    <a id="page_num{{ data['total_pages'] }}" href="?page={{ data['total_pages'] }}{{ filters }}">
         {{ data['total_pages'] }}
     </a>
 {%- endmacro -%}
 
 {%- macro display_last_five_pages() %}
-    <a id="page_num1" href="?page=1">1</a>
+    <a id="page_num1" href="?page=1{{ filters }}">1</a>
     <a> .. </a>
     {% for i in range(data['total_pages'] - 5, data['total_pages']) %}
-        <a id="page_num{{ i + 1 }}" href="?page={{ i + 1 }}">
+        <a id="page_num{{ i + 1 }}" href="?page={{ i + 1 }}{{ filters }}">
             {{ i + 1 }}
         </a>
     {% endfor %}
 {%- endmacro -%}
 
 {%- macro display_middle_pages() %}
-    <a id="page_num1" href="?page=1">1</a>
+    <a id="page_num1" href="?page=1{{ filters }}">1</a>
     <a> .. </a>
     {% for i in range(data['current_page'] - 3, data['current_page'] + 2) %}
-        <a id="page_num{{ i + 1 }}" href="?page={{ i + 1 }}">{{ i + 1 }}</a>
+        <a id="page_num{{ i + 1 }}" href="?page={{ i + 1 }}{{ filters }}">{{ i + 1 }}</a>
     {% endfor %}
     <a> .. </a>
-    <a id="page_num{{ data['total_pages'] }}" href="?page={{ data['total_pages'] }}">
+    <a id="page_num{{ data['total_pages'] }}" href="?page={{ data['total_pages'] }}{{ filters }}">
         {{ data['total_pages'] }}
     </a>
 {%- endmacro -%}
@@ -35,7 +35,7 @@
 {%- macro get_num_paginate() -%}
     {% if data['total_pages'] <= 10 %}
         {% for i in range(data['total_pages']) %}
-            <a id="page_num{{ i + 1 }}" href="?page={{ i + 1 }}">{{ i + 1 }}</a>
+            <a id="page_num{{ i + 1 }}" href="?page={{ i + 1 }}{{ filters }}">{{ i + 1 }}</a>
         {% endfor %}
     {% else %}
         {% if data['current_page'] <= 4 %}
@@ -50,17 +50,17 @@
 
 {%- macro create_pagination(pagination) -%}
     {% if data['current_page'] > 1 %}
-        <a href="?page={{ data['current_page'] - 1 }}">«</a>
+        <a href="?page={{ data['current_page'] - 1 }}{{ filters }}">«</a>
     {% endif %}
 
     {{ get_num_paginate() }}
 
     {% if data['current_page'] < data['total_pages'] %}
-        <a href="?page={{ data['current_page'] + 1 }}">»</a>
+        <a href="?page={{ data['current_page'] + 1 }}{{ filters }}">»</a>
     {% endif %}
 {%- endmacro -%}
 
 
 <div class="pagination">
-{{ create_pagination() }}
+    {{ create_pagination() }}
 </div>

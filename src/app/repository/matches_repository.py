@@ -35,8 +35,15 @@ class MatchesRepository(SqlAlchemyRepository):
 
         return query
 
-    def find_count_finished_matches(self) -> int:
-        return self._session.execute(text("SELECT COUNT(*) FROM Matches WHERE is_end_game")).scalar()
+    def find_count_finished_matches(self, name: str) -> int:
+        query = text("SELECT COUNT(*) "
+                     "FROM Matches m "
+                     "INNER JOIN Players p1 ON p1.id = m.player1_id "
+                     "INNER JOIN Players p2 ON p2.id = m.player2_id "
+                     "WHERE is_end_game AND (p1.name LIKE :name OR p2.name LIKE :name)")
+
+        result = self._session.execute(query, {'name': f'%{name}%'})
+        return result.scalar()
 
     def find_by_uuid(self, uuid: UUID) -> Matches:
         return self._session.execute(select(Matches).filter(Matches.uuid == uuid)).one()[0]
