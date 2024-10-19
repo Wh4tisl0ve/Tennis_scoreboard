@@ -1,10 +1,9 @@
 import uuid
-import datetime
 from typing import List
 from uuid import UUID
 
 from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column, relationship
-from sqlalchemy import ForeignKey, String, Boolean, JSON, Integer, DateTime, func
+from sqlalchemy import ForeignKey, String, Boolean, JSON, Integer
 
 
 class Base(DeclarativeBase):

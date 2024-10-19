@@ -4,7 +4,6 @@ from sqlalchemy import select, update, or_, text
 from sqlalchemy.orm import aliased
 
 from app.repository.sqlalchemy_repository import SqlAlchemyRepository
-from app.repository.base_repository import T
 from app.models import Matches, Players
 
 
@@ -46,18 +45,12 @@ class MatchesRepository(SqlAlchemyRepository):
         return result.scalar()
 
     def find_by_uuid(self, uuid: UUID) -> Matches:
-        return self._session.execute(select(Matches).filter(Matches.uuid == uuid)).one()[0]
+        return self._session.execute(select(Matches).filter(Matches.uuid == uuid)).first()[0]
 
     def add_winner_id_by_uuid(self, uuid: str, winner_id: int) -> None:
         self._session.execute(update(Matches).where(Matches.uuid == uuid).values(winner_id=winner_id))
         self._session.execute(update(Matches).where(Matches.uuid == uuid).values(is_end_game=True))
         self._session.commit()
-
-    def delete(self, entity: T) -> T:
-        pass
-
-    def update(self, entity: T) -> None:
-        pass
 
 
 matches_repo = MatchesRepository()

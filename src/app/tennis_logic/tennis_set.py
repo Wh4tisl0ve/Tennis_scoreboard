@@ -13,10 +13,9 @@ class TennisSet(TennisModel):
         if self._child_model.is_last_stage():
             match self._state:
                 case State.NORMAL:
-                    if self._child_model.is_points_not_last_value():
-                        if self._child_model.is_diff_two_point():
-                            self.win()
-                            return
+                    if self._child_model.is_points_not_last_value() and self._child_model.is_diff_two_point():
+                        self.win()
+                        return
                 case State.DRAW:
                     self.set_state(State.AD)
                 case _:
@@ -26,3 +25,6 @@ class TennisSet(TennisModel):
 
             if self._child_model.is_equals_value():
                 self.set_state(State.DRAW)
+
+    def is_diff_one_point(self) -> bool:
+        return abs(self._player1_value - self._player2_value) >= 1

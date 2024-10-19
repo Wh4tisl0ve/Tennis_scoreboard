@@ -59,4 +59,4 @@ class TennisModel(ABC):
     def deserialize(self, dict_serialize: dict, state: int):
         self._player1_value = int(dict_serialize['player1_value'])
         self._player2_value = int(dict_serialize['player2_value'])
-        self._state = State.get_state_by_value(state)
+        self._state = State(state)

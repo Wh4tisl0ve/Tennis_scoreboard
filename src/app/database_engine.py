@@ -13,9 +13,6 @@ class DataBaseEngine:
                                             autoflush=False,
                                             expire_on_commit=False)
 
-    def dispose(self) -> None:
-        self.engine.dispose()
-
     def get_session(self) -> Session:
         with self.session_factory() as session:
             return session

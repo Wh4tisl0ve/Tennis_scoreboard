@@ -51,7 +51,7 @@ class TennisGame(TennisModel):
     def deserialize(self, dict_serialize: dict, state: int):
         self._player1_value = int(dict_serialize['player1_value'])
         self._player2_value = int(dict_serialize['player2_value'])
-        self.set_state(State.get_state_by_value(state))
+        self.set_state(State(state))
 
     def to_render(self) -> dict:
         return {"player1_value": self.get_value(self._player1_value),

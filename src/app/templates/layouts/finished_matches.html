@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'layouts/base.html' %}
 
 {% block styles %}
 <script src="static/scripts/paginate.js"></script>
@@ -48,7 +48,7 @@
         <tbody>
         {% for match in data %}
         <tr>
-            <td><a href="/match-story={{ match.uuid }}">{{ match.uuid }}</a></td>
+            <td>{{ match.uuid }}</td>
             <td>{{ match.player1_name }}</td>
             <td>{{ match.player2_name }}</td>
             <td>{{ match.winner }}</td>

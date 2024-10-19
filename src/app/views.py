@@ -2,9 +2,9 @@ from app.mini_framework import app
 from app.mini_framework.pagination.pagination import Pagination
 from app.models import MatchStory
 from app.services.match_create_service import match_create_service
+from app.services.match_score_service import match_score_service
 from app.repository.matches_repository import matches_repo
 from app.repository.match_story_repository import matches_story_repo
-from app.services.match_score_service import match_score_service
 from app.tennis_logic.tennis import Tennis
 
 
@@ -40,23 +40,23 @@ def get_match_score(request: dict, start_response) -> str:
 
     tennis = match_score_service.deserialize_tennis(match)
 
-    tennis_serialize = match_score_service.serialize_tennis(match)
-    tennis_serialize['tennis'] = tennis.to_render()
+    tennis_to_render = match_score_service.serialize_tennis(match)
+    tennis_to_render['tennis'] = tennis.to_render()
 
     start_response('200 OK', [('Content-Type', 'text/html')])
-    return app.render_template('pages/match-score.html', data=tennis_serialize)
+    return app.render_template('layouts/match-score.html', data=tennis_to_render)
 
 
 @app.route(r'^\/match-score', methods=['POST'])
 def player_scored(request: dict, start_response) -> str:
-    num_player_scored = request.get('input_data').get('player_id')
+    player_scored_num = request.get('input_data').get('player_id')
 
     uuid = request.get('uuid')
     match = matches_repo.find_by_uuid(uuid)
 
     tennis = match_score_service.deserialize_tennis(match)
 
-    match_score_service.player_goals(num_player_scored, tennis, match)
+    match_score_service.player_goals(player_scored_num, tennis, match)
 
     if tennis.is_end_game:
         match_score_service.add_winner(tennis, match)
@@ -74,7 +74,7 @@ def get_played_matches(request: dict, start_response) -> str:
     finished_matches = matches_repo.find_finished_matches(player_name_filter, page_num, items_per_page)
     count_records = matches_repo.find_count_finished_matches(player_name_filter)
 
-    pagination = Pagination(count_records,
+    pagination = Pagination(total_records=count_records,
                             current_page=page_num,
                             items_per_page=items_per_page,
                             filters={'filter_by_player_name': player_name_filter,
@@ -82,6 +82,6 @@ def get_played_matches(request: dict, start_response) -> str:
 
     start_response('200 OK', [('Content-Type', 'text/html')])
 
-    return app.render_template('pages/finished_matches.html',
+    return app.render_template('layouts/finished_matches.html',
                                data=finished_matches,
                                pagination=pagination)

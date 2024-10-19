@@ -13,7 +13,7 @@ class Pagination:
         self.__filters = filters
 
     @property
-    def filters(self) -> str:
+    def query_string_filters(self) -> str:
         params = {k: v for k, v in self.__filters.items() if v}
         query_string = urllib.parse.urlencode(params)
         return '&' + query_string if query_string else ''
@@ -24,9 +24,9 @@ class Pagination:
                              'total_pages': self.__total_pages,
                              'current_page': self.__current_page}
 
-        return app.render_template('pagination.html',
+        return app.render_template('includes/pagination.html',
                                    data=pagination_config,
-                                   filters=self.filters)
+                                   filters=self.query_string_filters)
 
     @property
     def info(self) -> str:

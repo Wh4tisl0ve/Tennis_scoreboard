@@ -6,6 +6,3 @@ class State(Enum):
     DRAW = -1
     AD = 1
     TIE_BREAK = 2
-
-    def get_state_by_value(value: int):
-        return State(value)

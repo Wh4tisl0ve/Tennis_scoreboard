@@ -9,11 +9,5 @@ class PlayersRepository(SqlAlchemyRepository):
         query_filter_player = self._session.query(Players).filter(Players.name == name)
         return self._session.execute(query_filter_player).one()
 
-    def update(self, player: Players) -> None:
-        pass
-
-    def delete(self, player: Players) -> Players:
-        pass
-
 
 players_repo = PlayersRepository()
