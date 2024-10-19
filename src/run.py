@@ -1,6 +1,6 @@
 from waitress import serve
 from whitenoise import WhiteNoise
-from config import settings
+from app.config import settings
 
 from app.mini_framework.request_handler import handle_request
 
