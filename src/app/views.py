@@ -49,10 +49,10 @@ def get_match_score(request: dict, start_response) -> str:
         return app.render_template('layouts/match-score.html', data=tennis_to_render)
     except NotFoundError as error:
         start_response('404 Not Found', [('Content-Type', 'text/html')])
-        return app.render_template('404.html', data=error)
+        return app.render_template('error.html', data=error)
     except KeyError:
         start_response('400 Bad Request', [('Content-Type', 'text/html')])
-        return app.render_template('404.html', data=InvalidFieldError('Отсутствовал uuid в поле запроса'))
+        return app.render_template('error.html', data=InvalidFieldError('Отсутствовал uuid в поле запроса'))
 
 
 @app.route(r'^\/match-score', methods=['POST'])
@@ -97,4 +97,4 @@ def get_played_matches(request: dict, start_response) -> str:
                                    pagination=pagination)
     except ValueError:
         start_response('400 Bad Request', [('Content-Type', 'text/html')])
-        return app.render_template('404.html', data=InvalidFieldError('Параметр содержал несовместимые данные'))
+        return app.render_template('error.html', data=InvalidFieldError('Параметр содержал несовместимые данные'))
