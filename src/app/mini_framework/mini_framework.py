@@ -3,6 +3,8 @@ from typing import Callable
 
 from jinja2 import Environment, FileSystemLoader
 
+from app.exceptions import NotFoundError
+
 
 class MiniFrameWork:
     def __init__(self):
@@ -20,7 +22,7 @@ class MiniFrameWork:
             if endpoint.match(url):
                 return handler
 
-        raise Exception("Endpoint не найден")
+        raise NotFoundError("Endpoint не найден")
 
     def render_template(self, *args, **kwargs) -> str:
         file_loader = FileSystemLoader('src/app/templates')

@@ -6,8 +6,9 @@
     <meta name="viewport"
           content="width=device-width,
                    initial-scale=1.0">
+    <link rel="icon" href="static/images/error.ico">
     <title>
-        404 Page Not Found
+        {{ data.code }}
     </title>
     <style>
 
@@ -63,12 +64,11 @@
 
 <body>
 <div class="error-container">
-    <h1> 404 </h1>
+    <h1> {{ data.code }} </h1>
     <p>
-        Oops! The page you're
-        looking for is not here.
+        {{ data.message }}
     </p>
-    <a href="/app/static">Go Back to Home</a>
+    <a href="/">Вернутся на главную страницу</a>
 </div>
 </body>
 

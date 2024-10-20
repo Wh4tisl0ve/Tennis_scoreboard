@@ -3,6 +3,7 @@ from uuid import UUID
 from sqlalchemy import select, update, or_, text
 from sqlalchemy.orm import aliased
 
+from app.exceptions import NotFoundError
 from app.repository.sqlalchemy_repository import SqlAlchemyRepository
 from app.models import Matches, Players
 
@@ -45,7 +46,10 @@ class MatchesRepository(SqlAlchemyRepository):
         return result.scalar()
 
     def find_by_uuid(self, uuid: UUID) -> Matches:
-        return self._session.execute(select(Matches).filter(Matches.uuid == uuid)).first()[0]
+        try:
+            return self._session.execute(select(Matches).filter(Matches.uuid == uuid)).first()[0]
+        except TypeError:
+            raise NotFoundError(f'Матч с данным uuid = {uuid} не был найден')
 
     def add_winner_id_by_uuid(self, uuid: str, winner_id: int) -> None:
         self._session.execute(update(Matches).where(Matches.uuid == uuid).values(winner_id=winner_id))

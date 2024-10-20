@@ -1,11 +1,17 @@
 {% extends 'layouts/base.html' %}
 
+{% block styles %}
+<script src="static/scripts/validator.js"></script>
+{% endblock %}
+
 {% block title %}
 Главная страница
 {% endblock %}
 
 {% block content %}
-<form class="new_match_form" method="post" name="new_match_form" action="/new-match">
+<form class="new_match_form" onsubmit="return matchFieldsPlayerName() && checkEmptyString()" method="post"
+      name="new_match_form"
+      action="/new-match">
     <h1 class="title_form">Создание нового матча</h1>
     <div class="input_block">
         {% for player_id in range(2) %}

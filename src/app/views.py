@@ -1,3 +1,4 @@
+from app.exceptions import NotFoundError, InvalidFieldError
 from app.mini_framework import app
 from app.mini_framework.pagination.pagination import Pagination
 from app.models import MatchStory
@@ -18,8 +19,8 @@ def render_main_page(request: dict, start_response) -> str:
 def create_new_match(request: dict, start_response) -> str:
     players_dict = request.get('input_data')
 
-    new_match = match_create_service.create_match(player1_name=players_dict['player1_name'],
-                                                  player2_name=players_dict['player2_name'])
+    new_match = match_create_service.create_match(player1_name=players_dict.get('player1_name'),
+                                                  player2_name=players_dict.get('player2_name'))
 
     tennis = Tennis()
 
@@ -35,16 +36,23 @@ def create_new_match(request: dict, start_response) -> str:
 
 @app.route(r'^\/match-score', methods=['GET'])
 def get_match_score(request: dict, start_response) -> str:
-    uuid = request.get('uuid')
-    match = matches_repo.find_by_uuid(uuid)
+    try:
+        uuid = request['uuid']
+        match = matches_repo.find_by_uuid(uuid)
 
-    tennis = match_score_service.deserialize_tennis(match)
+        tennis = match_score_service.deserialize_tennis(match)
 
-    tennis_to_render = match_score_service.serialize_tennis(match)
-    tennis_to_render['tennis'] = tennis.to_render()
+        tennis_to_render = match_score_service.serialize_tennis(match)
+        tennis_to_render['tennis'] = tennis.to_render()
 
-    start_response('200 OK', [('Content-Type', 'text/html')])
-    return app.render_template('layouts/match-score.html', data=tennis_to_render)
+        start_response('200 OK', [('Content-Type', 'text/html')])
+        return app.render_template('layouts/match-score.html', data=tennis_to_render)
+    except NotFoundError as error:
+        start_response('404 Not Found', [('Content-Type', 'text/html')])
+        return app.render_template('404.html', data=error)
+    except KeyError:
+        start_response('400 Bad Request', [('Content-Type', 'text/html')])
+        return app.render_template('404.html', data=InvalidFieldError('Отсутствовал uuid в поле запроса'))
 
 
 @app.route(r'^\/match-score', methods=['POST'])
@@ -67,21 +75,26 @@ def player_scored(request: dict, start_response) -> str:
 
 @app.route(r'^\/matches', methods=['GET'])
 def get_played_matches(request: dict, start_response) -> str:
-    player_name_filter = request.get('filter_by_player_name', '')
-    page_num = int(request.get('page', 1))
-    items_per_page = int(request.get('per_page', 10))
+    try:
+        player_name_filter = request.get('filter_by_player_name', '')
 
-    finished_matches = matches_repo.find_finished_matches(player_name_filter, page_num, items_per_page)
-    count_records = matches_repo.find_count_finished_matches(player_name_filter)
+        page_num = int(request.get('page', 1))
+        items_per_page = int(request.get('per_page', 10))
 
-    pagination = Pagination(total_records=count_records,
-                            current_page=page_num,
-                            items_per_page=items_per_page,
-                            filters={'filter_by_player_name': player_name_filter,
-                                     'per_page': items_per_page})
+        finished_matches = matches_repo.find_finished_matches(player_name_filter, page_num, items_per_page)
+        count_records = matches_repo.find_count_finished_matches(player_name_filter)
 
-    start_response('200 OK', [('Content-Type', 'text/html')])
+        pagination = Pagination(total_records=count_records,
+                                current_page=page_num,
+                                items_per_page=items_per_page,
+                                filters={'filter_by_player_name': player_name_filter,
+                                         'per_page': items_per_page})
 
-    return app.render_template('layouts/finished_matches.html',
-                               data=finished_matches,
-                               pagination=pagination)
+        start_response('200 OK', [('Content-Type', 'text/html')])
+
+        return app.render_template('layouts/finished_matches.html',
+                                   data=finished_matches,
+                                   pagination=pagination)
+    except ValueError:
+        start_response('400 Bad Request', [('Content-Type', 'text/html')])
+        return app.render_template('404.html', data=InvalidFieldError('Параметр содержал несовместимые данные'))
