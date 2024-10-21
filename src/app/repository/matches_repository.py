@@ -49,7 +49,7 @@ class MatchesRepository(SqlAlchemyRepository):
         try:
             return self._session.execute(select(Matches).filter(Matches.uuid == uuid)).first()[0]
         except TypeError:
-            raise NotFoundError(f'Матч с данным uuid = {uuid} не был найден')
+            raise NotFoundError(f'Матч с uuid = {uuid} не был найден')
 
     def add_winner_id_by_uuid(self, uuid: str, winner_id: int) -> None:
         self._session.execute(update(Matches).where(Matches.uuid == uuid).values(winner_id=winner_id))

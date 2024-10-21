@@ -19,8 +19,8 @@ def render_main_page(request: dict, start_response) -> str:
 def create_new_match(request: dict, start_response) -> str:
     players_dict = request.get('input_data')
 
-    new_match = match_create_service.create_match(player1_name=players_dict.get('player1_name'),
-                                                  player2_name=players_dict.get('player2_name'))
+    new_match = match_create_service.create_match(player1_name=players_dict.get('player1_name').strip(),
+                                                  player2_name=players_dict.get('player2_name').strip())
 
     tennis = Tennis()
 
