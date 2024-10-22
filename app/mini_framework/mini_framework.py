@@ -25,7 +25,7 @@ class MiniFrameWork:
         raise NotFoundError("Endpoint не найден")
 
     def render_template(self, *args, **kwargs) -> str:
-        file_loader = FileSystemLoader('src/app/templates')
+        file_loader = FileSystemLoader('app/templates')
         env = Environment(loader=file_loader)
 
         template = env.get_template(args[0])

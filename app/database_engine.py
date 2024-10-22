@@ -2,7 +2,7 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
-from src.app.config import settings
+from app.config import settings
 
 
 class DataBaseEngine:

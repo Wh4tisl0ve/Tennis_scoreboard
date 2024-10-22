@@ -1,6 +1,6 @@
-from src.app.tennis_logic.tennis_game import TennisGame
-from src.app.tennis_logic.tennis_match import TennisMatch
-from src.app.tennis_logic.tennis_set import TennisSet
+from app.tennis_logic.tennis_game import TennisGame
+from app.tennis_logic.tennis_match import TennisMatch
+from app.tennis_logic.tennis_set import TennisSet
 
 
 class Tennis:
