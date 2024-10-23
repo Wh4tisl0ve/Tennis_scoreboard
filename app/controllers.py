@@ -2,11 +2,19 @@ from app.exceptions import NotFoundError, InvalidFieldError
 from app.mini_framework import app
 from app.mini_framework.pagination.pagination import Pagination
 from app.models import MatchStory
-from app.services.match_create_service import match_create_service
-from app.services.match_score_service import match_score_service
-from app.repository.matches_repository import matches_repo
-from app.repository.match_story_repository import matches_story_repo
+from app.repository.concrete_repo.match_story_repository_impl import MatchStoryRepositoryImpl
+from app.repository.concrete_repo.matches_repository_impl import MatchesRepositoryImpl
+from app.repository.concrete_repo.players_repository_impl import PlayersRepositoryImpl
+from app.services.match_create_service import MatchCreateService
+from app.services.match_score_service import MatchScoreService
 from app.tennis_logic.tennis import Tennis
+
+matches_story_repo = MatchStoryRepositoryImpl()
+matches_repo = MatchesRepositoryImpl()
+players_repo = PlayersRepositoryImpl()
+
+match_create_service = MatchCreateService(matches_repo, players_repo)
+match_score_service = MatchScoreService(matches_repo, players_repo, matches_story_repo)
 
 
 @app.route(r'^\/$', methods=['GET'])
@@ -27,7 +35,7 @@ def create_new_match(request: dict, start_response) -> str:
     match_story_record = MatchStory(id_match=new_match.id,
                                     score=tennis.to_dict(),
                                     match_status=tennis.status_to_dict())
-    matches_story_repo.add(match_story_record)
+    matches_story_repo.create(match_story_record)
 
     start_response('302 Redirect', [('Location', f'/match-score?uuid={new_match.uuid}')])
 
@@ -79,7 +87,7 @@ def get_played_matches(request: dict, start_response) -> str:
         player_name_filter = request.get('filter_by_player_name', '')
 
         page_num = int(request.get('page', 1))
-        items_per_page = int(request.get('per_page', 10))
+        items_per_page = int(request.get('per_page', 5))
 
         finished_matches = matches_repo.find_finished_matches(player_name_filter, page_num, items_per_page)
         count_records = matches_repo.find_count_finished_matches(player_name_filter)

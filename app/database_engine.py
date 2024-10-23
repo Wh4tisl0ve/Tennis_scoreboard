@@ -1,5 +1,5 @@
 from sqlalchemy.orm.session import Session
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy import create_engine
 
 from app.config import settings
@@ -13,9 +13,8 @@ class DataBaseEngine:
                                             autoflush=False,
                                             expire_on_commit=False)
 
-    def get_session(self) -> Session:
-        with self.session_factory() as session:
-            return session
+    def get_session_factory(self) -> sessionmaker[Session]:
+        return self.session_factory
 
 
 db_engine_mysql = DataBaseEngine(url=settings.db.DATABASE_URL_pymysql)

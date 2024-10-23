@@ -23,9 +23,6 @@ def handle_request(environ, start_response):
     except NotFoundError as error:
         start_response('404 Not Found', [('Content-Type', 'text/html')])
         return [app.render_template('error.html', data=error).encode()]
-    except Exception:
-        start_response('500 Internal Error', [('Content-Type', 'text/html')])
-        return [app.render_template('error.html', data={'message': 'Внутренняя ошибка', 'code': 500}).encode()]
 
 
 def unpack_dict_values(params: dict) -> dict:
